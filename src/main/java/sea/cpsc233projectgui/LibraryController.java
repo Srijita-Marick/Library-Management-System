@@ -139,7 +139,7 @@ public class LibraryController {
                 String id = txtID.getText();
                 String name = txtName.getText();
                 boolean error = false;
-                if (!menuMemberType.getText().equals("Member Type:") && id!=null && name!=null){
+                if (!menuMemberType.getText().equals("Member Type:") && !id.isEmpty() && !name.isEmpty()){
                     String type = menuMemberType.getText();
                     Integer id1 = Integer.parseInt(txtID.getText());
                     if (type.equals("ADULT")){
