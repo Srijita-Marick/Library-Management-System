@@ -18,41 +18,48 @@ public class LibraryController {
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
-    @FXML
-    public void initialize() {
-
+    private Data data;
+    public void setData(Data data) {
+        this.data = data;
     }
 
     @FXML
     protected void save(ActionEvent event) {
-        //not functional yet
+        MenuItem menuItem = (MenuItem) event.getSource();
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
 //        fileChooser.setInitialFileName(".txt");
 
-        Node node = (Node) event.getSource();
+        Node node = menuItem.getParentPopup().getOwnerNode();
         File file = fileChooser.showSaveDialog(node.getScene().getWindow());
-        System.out.println(file);
 
         if (file != null) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file.getPath()))) {
-                bw.write("Saved!");
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+                bw.write("Saved!"); // Write your content here
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("File saved successfully!");
+                a.show();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Error saving file: " + e.getMessage());
+                a.show();
             }
         }
     }
 
     @FXML
     protected void load(ActionEvent event){
-        // not functional yet
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
 
-        Node node = (Node) event.getSource();
-        loadedFile = fileChooser.showOpenDialog(node.getScene().getWindow());
+        MenuItem menuItem = (MenuItem) event.getSource();
+        loadedFile = fileChooser.showOpenDialog(menuItem.getParentPopup().getOwnerWindow());
 
         if (!(loadedFile == null)){
             a.setAlertType(Alert.AlertType.INFORMATION);
@@ -67,7 +74,7 @@ public class LibraryController {
 
     @FXML
     void quit(ActionEvent event) {
-        System.exit(0);
+
     }
 
     @FXML
