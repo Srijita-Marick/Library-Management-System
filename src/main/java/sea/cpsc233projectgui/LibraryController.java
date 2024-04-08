@@ -1,5 +1,6 @@
 package sea.cpsc233projectgui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -29,14 +30,13 @@ public class LibraryController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
-//        fileChooser.setInitialFileName(".txt");
 
         Node node = menuItem.getParentPopup().getOwnerNode();
         File file = fileChooser.showSaveDialog(node.getScene().getWindow());
 
         if (file != null) {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-                bw.write("Saved!"); // Write your content here
+                bw.write("Saved!");
                 a.setAlertType(Alert.AlertType.INFORMATION);
                 a.setContentText("File saved successfully!");
                 a.show();
@@ -63,7 +63,7 @@ public class LibraryController {
 
         if (!(loadedFile == null)){
             a.setAlertType(Alert.AlertType.INFORMATION);
-            a.setContentText("File Load Successful" + loadedFile.getName());
+            a.setContentText("File Load Successful " + loadedFile.getName());
             a.show();
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
@@ -74,7 +74,17 @@ public class LibraryController {
 
     @FXML
     void quit(ActionEvent event) {
-
+        // Display confirmation dialog before quitting
+        Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmDialog.setTitle("Confirm Exit");
+        confirmDialog.setHeaderText(null);
+        confirmDialog.setContentText("Are you sure you want to exit?");
+        confirmDialog.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                // Close the application
+                Platform.exit();
+            }
+        });
     }
 
     @FXML
