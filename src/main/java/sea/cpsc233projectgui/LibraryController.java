@@ -2,11 +2,15 @@ package sea.cpsc233projectgui;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.*;
@@ -14,6 +18,17 @@ import java.io.*;
 public class LibraryController {
     @FXML
     private File loadedFile;
+
+    @FXML
+    private VBox vboxUserInput;
+
+    @FXML
+    private Menu menuBook;
+
+    @FXML
+    private MenuItem menuitemBookSearch;
+    @FXML
+    private MenuItem menuitemAddBook;
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
@@ -140,7 +155,30 @@ public class LibraryController {
     }
 
     @FXML
-    public void addBook(){
+    public void addBook(ActionEvent event){
+        Label lblTitle = new Label("Title:");
+        TextField txtTitle = new TextField();
+        Label lblAuthor = new Label("Author:");
+        TextField txtAuthor = new TextField();
+        MenuButton menuGenre = new MenuButton("Genre:");
+        MenuItem fantasy = new MenuItem("Fantasy");
+        fantasy.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuGenre.setText("Fantasy");
+            }
+        });
+        menuGenre.getItems().add(fantasy);
+        RadioButton physical = new RadioButton("Physical");
+        RadioButton audio = new RadioButton("Audiobook");
+        Label lblNarrator = new Label("Narrator:");
+        lblNarrator.setVisible(false);
+        TextField txtNarrator = new TextField();
+        txtNarrator.setVisible(false);
+
+        Button btnAddBook = new Button("Add Book");
+
+        vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,menuGenre,physical,audio,lblNarrator,txtNarrator,btnAddBook);
 
     }
 
@@ -161,7 +199,6 @@ public class LibraryController {
 
     @FXML
     public void viewBook(){
-
     }
 
     @FXML
