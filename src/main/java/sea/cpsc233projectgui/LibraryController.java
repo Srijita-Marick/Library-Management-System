@@ -311,6 +311,13 @@ public class LibraryController {
                 }
                 if (error){
                     System.out.println("ERROR");
+                } else {
+                    ArrayList<Books> titleBooks = data.getBooksByTitle(title);
+                    for (Books book : titleBooks){
+                        if (book.getAuthor().equals(author)){
+                            lblDisplay.setText(book.toString());
+                        }
+                    }
                 }
             }
         });
@@ -369,7 +376,7 @@ public class LibraryController {
     public void viewBook(){
         vboxUserInput.getChildren().clear();
 
-        String display="All Books:\n";
+        String display="All Books:";
         ArrayList<Books> books = data.getAllBooks();
         for (Books book: books){
             display += book.toString();
