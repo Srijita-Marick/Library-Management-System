@@ -148,6 +148,7 @@ public class LibraryController {
 
     @FXML
     public void addBook(ActionEvent event){
+        vboxUserInput.getChildren().clear();
         Label lblTitle = new Label("Title:");
         TextField txtTitle = new TextField();
         Label lblAuthor = new Label("Author:");
@@ -257,6 +258,7 @@ public class LibraryController {
 
     @FXML
     public void searchBook(ActionEvent event){
+        vboxUserInput.getChildren().clear();
         Label lblTitle = new Label("Search Title:");
         TextField txtSearchTitle = new TextField();
         Label lblAuthor = new Label("Search Author:");
