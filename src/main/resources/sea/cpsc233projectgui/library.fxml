@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="645.0" style="-fx-background-color: #9bddff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.cpsc233projectgui.LibraryController">
    <top>
@@ -32,14 +28,14 @@
                   <MenuItem mnemonicParsing="false" text="Most Active Child" />
               </items>
             </Menu>
-          <Menu fx:id="menuBook" mnemonicParsing="false" text="Book">
+          <Menu mnemonicParsing="false" text="Book">
             <items>
-                  <MenuItem fx:id="menuitemAddBook" mnemonicParsing="false" onAction="#addBook" text="Add" />
+                  <MenuItem mnemonicParsing="false" text="Add" />
                   <MenuItem mnemonicParsing="false" text="Remove" />
                   <MenuItem mnemonicParsing="false" text="Checkout" />
                   <MenuItem mnemonicParsing="false" text="Return" />
                   <MenuItem mnemonicParsing="false" text="View..." />
-                  <MenuItem fx:id="menuitemBookSearch" mnemonicParsing="false" text="Search..." />
+                  <MenuItem mnemonicParsing="false" text="Search..." />
                   <MenuItem mnemonicParsing="false" text="Most Popular" />
             </items>
           </Menu>
@@ -51,21 +47,7 @@
         </menus>
       </MenuBar>
    </top>
-   <left>
-      <VBox fx:id="vboxUserInput" prefHeight="410.0" prefWidth="158.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <children>
-            <Label text="User Input">
-               <font>
-                  <Font name="Book Antiqua" size="16.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-   </left>
-   <right>
-      <TextArea fx:id="fileContentTextArea" prefHeight="410.0" prefWidth="496.0" BorderPane.alignment="CENTER" />
-   </right>
+    <center>
+        <TextArea fx:id="fileContentTextArea" />
+    </center>
 </BorderPane>
