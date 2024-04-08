@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="645.0" style="-fx-background-color: #9bddff;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.cpsc233projectgui.LibraryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="645.0" style="-fx-background-color: #9bddff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.cpsc233projectgui.LibraryController">
    <top>
       <MenuBar style="-fx-background-color: #9bddff;" BorderPane.alignment="CENTER">
         <menus>
@@ -17,7 +22,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Member">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#addMember" text="Add" />
+                <MenuItem mnemonicParsing="false" text="Add" />
                   <MenuItem mnemonicParsing="false" text="Remove" />
                   <MenuItem mnemonicParsing="false" text="View All" />
                   <MenuItem mnemonicParsing="false" text="Search" />
@@ -53,6 +58,13 @@
       </VBox>
    </left>
    <right>
-      <TextArea prefHeight="410.0" prefWidth="517.0" BorderPane.alignment="CENTER" />
+      <ScrollPane prefHeight="410.0" prefWidth="548.0" BorderPane.alignment="CENTER">
+         <content>
+            <Label fx:id="lblDisplay" />
+         </content>
+         <padding>
+            <Insets bottom="20.0" left="15.0" right="20.0" top="10.0" />
+         </padding>
+      </ScrollPane>
    </right>
 </BorderPane>

@@ -26,6 +26,9 @@ public class LibraryController {
     private Menu menuBook;
 
     @FXML
+    private Label lblDisplay;
+
+    @FXML
     private MenuItem menuitemBookSearch;
     @FXML
     private MenuItem menuitemAddBook;
@@ -236,6 +239,7 @@ public class LibraryController {
 
     @FXML
     public void addBook(ActionEvent event){
+
         vboxUserInput.getChildren().clear();
         Label lblTitle = new Label("Title:");
         TextField txtTitle = new TextField();
