@@ -167,17 +167,35 @@ public class LibraryController {
         }
 
 
-        RadioButton physical = new RadioButton("Physical");
-        RadioButton audio = new RadioButton("Audiobook");
+        RadioButton radioPhysical = new RadioButton("Physical");
+
+        RadioButton radioAudio = new RadioButton("Audiobook");
+
 
         Label lblNarrator = new Label("Narrator:");
         lblNarrator.setVisible(false);
         TextField txtNarrator = new TextField();
         txtNarrator.setVisible(false);
+        radioPhysical.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                radioAudio.setSelected(false);
+                lblNarrator.setVisible(false);
+                txtNarrator.setVisible(false);
+            }
+        });
 
+        radioAudio.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                radioPhysical.setSelected(false);
+                lblNarrator.setVisible(true);
+                txtNarrator.setVisible(true);
+            }
+        });
         Button btnAddBook = new Button("Add Book");
 
-        vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,menuGenre,physical,audio,lblNarrator,txtNarrator,btnAddBook);
+        vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,menuGenre,radioPhysical,radioAudio,lblNarrator,txtNarrator,btnAddBook);
 
     }
 
