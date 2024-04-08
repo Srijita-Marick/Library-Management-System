@@ -5,6 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.control.TextArea?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.cpsc233projectgui.LibraryController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
@@ -46,4 +47,7 @@
         </menus>
       </MenuBar>
    </top>
+    <center>
+        <TextArea fx:id="fileContentTextArea" />
+    </center>
 </BorderPane>

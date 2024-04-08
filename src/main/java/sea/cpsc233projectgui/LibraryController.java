@@ -6,18 +6,19 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class LibraryController {
     @FXML
     private File loadedFile;
 
     private Alert a = new Alert(Alert.AlertType.NONE);
+
+    @FXML
+    private TextArea fileContentTextArea;
 
     private Data data;
     public void setData(Data data) {
@@ -50,7 +51,6 @@ public class LibraryController {
 
     @FXML
     protected void load(ActionEvent event){
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load File");
         fileChooser.getExtensionFilters().addAll(
@@ -61,16 +61,33 @@ public class LibraryController {
         MenuItem menuItem = (MenuItem) event.getSource();
         loadedFile = fileChooser.showOpenDialog(menuItem.getParentPopup().getOwnerWindow());
 
-        if (!(loadedFile == null)){
-            a.setAlertType(Alert.AlertType.INFORMATION);
-            a.setContentText("File Load Successful " + loadedFile.getName());
-            a.show();
+        if (loadedFile != null) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(loadedFile))) {
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append("\n");
+                }
+
+                // Display content in TextArea
+                fileContentTextArea.setText(content.toString());
+
+                // Show alert
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("File Load Successful: " + loadedFile.getName());
+                a.show();
+            } catch (IOException e) {
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Error loading file: " + e.getMessage());
+                a.show();
+            }
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("File Load Failed");
             a.show();
         }
     }
+
 
     @FXML
     void quit(ActionEvent event) {
