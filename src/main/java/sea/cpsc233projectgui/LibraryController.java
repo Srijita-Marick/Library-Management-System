@@ -30,7 +30,7 @@ public class LibraryController {
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
-    private Data data;
+    private Data data = new Data();
     public void setData(Data data) {
         this.data = data;
     }
@@ -125,7 +125,7 @@ public class LibraryController {
         for (String type:memType){ //creates genres and adds them to the genre menu
             MenuItem menuItem = new MenuItem(type);
             menuMemberType.getItems().add(menuItem);
-            setGenreAction(menuMemberType,menuItem);
+            setMemAction(menuMemberType,menuItem);
         }
 
         Button btnAddMem = new Button("Add Member");
