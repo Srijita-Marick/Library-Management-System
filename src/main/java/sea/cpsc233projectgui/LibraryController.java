@@ -3,13 +3,10 @@ package sea.cpsc233projectgui;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
@@ -229,8 +226,25 @@ public class LibraryController {
     }
 
     @FXML
-    public void searchBook(){
+    public void searchBook(ActionEvent event){
+        Label lblTitle = new Label("Search Title:");
+        TextField txtSearchTitle = new TextField();
+        Label lblAuthor = new Label("Search Author:");
 
+        TextField txtSearchAuthor = new TextField();
+
+        RadioButton physical = new RadioButton("Physical");
+        RadioButton audio = new RadioButton("Audiobook");
+
+        Button btnSearch = new Button("Search");
+
+        btnSearch.setOnAction(searchEvent -> {
+            String searchTitle = txtSearchTitle.getText().trim();
+            String searchAuthor = txtSearchAuthor.getText().trim();
+        });
+
+        vboxUserInput.getChildren().clear(); // Clear existing content
+        vboxUserInput.getChildren().addAll(lblTitle, txtSearchTitle, lblAuthor, txtSearchAuthor, physical, audio, btnSearch);
     }
 
     @FXML
