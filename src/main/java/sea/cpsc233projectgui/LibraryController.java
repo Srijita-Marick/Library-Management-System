@@ -17,9 +17,6 @@ public class LibraryController {
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
-    @FXML
-    private TextArea fileContentTextArea;
-
     private Data data;
     public void setData(Data data) {
         this.data = data;
@@ -68,9 +65,6 @@ public class LibraryController {
                 while ((line = reader.readLine()) != null) {
                     content.append(line).append("\n");
                 }
-
-                // Display content in TextArea
-                fileContentTextArea.setText(content.toString());
 
                 // Show alert
                 a.setAlertType(Alert.AlertType.INFORMATION);
