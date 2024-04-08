@@ -160,22 +160,22 @@ public class LibraryController {
         String[] genres = new String[]{"Fantasy","General Fiction","Historical Fiction","Horror","Literary","Mystery",
                 "Non-fiction","Poetry","Romance","Science Fiction","Thriller"};
 
-        for (String genre:genres){
+        for (String genre:genres){ //creates genres and adds them to the genre menu
             MenuItem menuItem = new MenuItem(genre);
             menuGenre.getItems().add(menuItem);
             setGenreAction(menuGenre,menuItem);
         }
 
-
         RadioButton radioPhysical = new RadioButton("Physical");
-
+        radioPhysical.setSelected(true);
         RadioButton radioAudio = new RadioButton("Audiobook");
 
-
+        //narrator fields should only be visible if the user is making an audiobook
         Label lblNarrator = new Label("Narrator:");
         lblNarrator.setVisible(false);
         TextField txtNarrator = new TextField();
         txtNarrator.setVisible(false);
+
         radioPhysical.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -193,8 +193,38 @@ public class LibraryController {
                 txtNarrator.setVisible(true);
             }
         });
+
         Button btnAddBook = new Button("Add Book");
 
+        // creates book when "Add Book" is clicked
+        btnAddBook.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String title = txtTitle.getText();
+                String author = txtAuthor.getText();
+                boolean error = false;
+                if (!menuGenre.getText().equals("Genre:")&&title!=null&&author!=null){
+                    String genre = menuGenre.getText();
+                    if (radioPhysical.isSelected()){
+                        data.storeNewPhysicalBook(title,author,genre,"Available");
+                    } else if (radioAudio.isSelected()&&txtNarrator.getText()!=null){
+                        String narrator = txtNarrator.getText();
+                        data.storeNewAudioBook(title,author,narrator,genre,"Available");
+                    }
+                    else {
+                        error = true;
+                    }
+                }
+                else {
+                    error = true;
+                }
+                if (error){
+                    System.out.println("ERROR");
+                }
+            }
+        });
+
+        //add all these items to the display box...
         vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,menuGenre,radioPhysical,radioAudio,lblNarrator,txtNarrator,btnAddBook);
 
     }
