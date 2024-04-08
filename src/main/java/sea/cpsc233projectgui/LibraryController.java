@@ -118,7 +118,34 @@ public class LibraryController {
 
     @FXML
     public void removeMember(){
+        vboxUserInput.getChildren().clear();
+        Label lblID = new Label("ID:");
+        TextField txtID = new TextField();
+        Label lblName = new Label("Name:");
+        TextField txtName = new TextField();
 
+        Button btnRemoveMember = new Button("Remove Member");
+
+        // deletes member when "Remove Member" button is clicked
+
+        btnRemoveMember.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                boolean error = false;
+                try {
+                    int id = Integer.parseInt(txtID.getText());
+                    String name = txtName.getText();
+                    error = data.removeMember(id,name);
+                } catch (NumberFormatException e){
+                    error = true;
+                }
+
+                if (error){
+                    System.out.println("ERROR");
+                }
+            }
+        });
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,btnRemoveMember);
     }
 
     @FXML
