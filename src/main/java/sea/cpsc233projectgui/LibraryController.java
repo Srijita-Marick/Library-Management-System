@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
@@ -30,7 +31,7 @@ public class LibraryController {
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
-    private Data data;
+    private Data data = new Data();
     public void setData(Data data) {
         this.data = data;
     }
@@ -128,9 +129,9 @@ public class LibraryController {
 
         // deletes member when "Remove Member" button is clicked
 
-        btnRemoveMember.setOnAction(new EventHandler<ActionEvent>() {
+        btnRemoveMember.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(MouseEvent mouseEvent) {
                 boolean error = false;
                 try {
                     int id = Integer.parseInt(txtID.getText());
