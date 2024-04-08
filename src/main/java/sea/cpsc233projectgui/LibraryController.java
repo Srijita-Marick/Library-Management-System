@@ -113,6 +113,52 @@ public class LibraryController {
 
     @FXML
     public void addMember(){
+        vboxUserInput.getChildren().clear();
+        Label lblID = new Label("ID:");
+        TextField txtID = new TextField();
+        Label lblName = new Label("Name:");
+        TextField txtName = new TextField();
+        MenuButton menuMemberType = new MenuButton("Member Type:");
+
+        String[] memType = new String[]{"ADULT","CHILD"};
+
+        for (String type:memType){ //creates genres and adds them to the genre menu
+            MenuItem menuItem = new MenuItem(type);
+            menuMemberType.getItems().add(menuItem);
+            setGenreAction(menuMemberType,menuItem);
+        }
+
+        Button btnAddMem = new Button("Add Member");
+
+        // creates book when "Add Book" is clicked
+        btnAddMem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Integer id = Integer.parseInt(txtID.getText());
+                String name = txtName.getText();
+                boolean error = false;
+                if (!menuMemberType.getText().equals("Member Type:") && id!=null && name!=null){
+                    String type = menuMemberType.getText();
+                    if (type.equals("ADULT")){
+                        error = !data.storeNewAdultMember(id,name);
+                    } else if (type.equals("CHILD")){
+                        error = !data.storeNewChildMember(id,name);
+                    }
+                    else {
+                        error = true;
+                    }
+                }
+                else {
+                    error = true;
+                }
+                if (error){
+                    System.out.println("ERROR");
+                }
+            }
+        });
+
+        //add all these items to the display box...
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,menuMemberType);
 
     }
 
