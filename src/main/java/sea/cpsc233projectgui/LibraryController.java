@@ -165,6 +165,7 @@ public class LibraryController {
         menuGenre.getItems().add(fantasy);
         RadioButton physical = new RadioButton("Physical");
         RadioButton audio = new RadioButton("Audiobook");
+
         Label lblNarrator = new Label("Narrator:");
         lblNarrator.setVisible(false);
         TextField txtNarrator = new TextField();

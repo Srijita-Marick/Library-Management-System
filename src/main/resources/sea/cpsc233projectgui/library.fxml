@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="645.0" style="-fx-background-color: #9bddff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sea.cpsc233projectgui.LibraryController">
    <top>
@@ -30,7 +34,7 @@
             </Menu>
           <Menu mnemonicParsing="false" text="Book">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Add" />
+                  <MenuItem mnemonicParsing="false" onAction="#addBook" text="Add" />
                   <MenuItem mnemonicParsing="false" text="Remove" />
                   <MenuItem mnemonicParsing="false" text="Checkout" />
                   <MenuItem mnemonicParsing="false" text="Return" />
@@ -47,7 +51,21 @@
         </menus>
       </MenuBar>
    </top>
-    <center>
-        <TextArea fx:id="fileContentTextArea" />
-    </center>
+   <left>
+      <VBox fx:id="vboxUserInput" prefHeight="410.0" prefWidth="164.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="20.0" left="15.0" right="20.0" top="10.0" />
+         </padding>
+         <children>
+            <Label text="User Input...">
+               <font>
+                  <Font name="Times New Roman" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <TextArea prefHeight="410.0" prefWidth="517.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>
