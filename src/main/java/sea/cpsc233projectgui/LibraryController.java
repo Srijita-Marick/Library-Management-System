@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class LibraryController {
     @FXML
@@ -155,14 +156,17 @@ public class LibraryController {
         Label lblAuthor = new Label("Author:");
         TextField txtAuthor = new TextField();
         MenuButton menuGenre = new MenuButton("Genre:");
-        MenuItem fantasy = new MenuItem("Fantasy");
-        fantasy.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                menuGenre.setText("Fantasy");
-            }
-        });
-        menuGenre.getItems().add(fantasy);
+
+        String[] genres = new String[]{"Fantasy","General Fiction","Historical Fiction","Horror","Literary","Mystery",
+                "Non-fiction","Poetry","Romance","Science Fiction","Thriller"};
+
+        for (String genre:genres){
+            MenuItem menuItem = new MenuItem(genre);
+            menuGenre.getItems().add(menuItem);
+            setGenreAction(menuGenre,menuItem);
+        }
+
+
         RadioButton physical = new RadioButton("Physical");
         RadioButton audio = new RadioButton("Audiobook");
 
@@ -176,6 +180,16 @@ public class LibraryController {
         vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,menuGenre,physical,audio,lblNarrator,txtNarrator,btnAddBook);
 
     }
+
+    void setGenreAction(MenuButton menuGenre, MenuItem menuItem){
+        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuGenre.setText(menuItem.getText());
+            }
+        });
+    }
+
 
     @FXML
     public void removeBook(){
