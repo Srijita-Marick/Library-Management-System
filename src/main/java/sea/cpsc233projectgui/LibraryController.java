@@ -11,6 +11,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import sea.cpsc233projectgui.objects.Books;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -366,6 +367,14 @@ public class LibraryController {
 
     @FXML
     public void viewBook(){
+        vboxUserInput.getChildren().clear();
+
+        String display="All Books:\n";
+        ArrayList<Books> books = data.getAllBooks();
+        for (Books book: books){
+            display += book.toString();
+        }
+        lblDisplay.setText(display);
     }
 
     @FXML
