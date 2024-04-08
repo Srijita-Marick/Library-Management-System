@@ -163,6 +163,15 @@ public class LibraryController {
 
     }
 
+    void setMemAction(MenuButton menuMemberType, MenuItem menuItem){
+        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuMemberType.setText(menuItem.getText());
+            }
+        });
+    }
+
     @FXML
     public void removeMember(){
         vboxUserInput.getChildren().clear();
