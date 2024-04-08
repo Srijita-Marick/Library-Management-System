@@ -204,10 +204,10 @@ public class LibraryController {
                 if (!menuGenre.getText().equals("Genre:")&&title!=null&&author!=null){
                     String genre = menuGenre.getText();
                     if (radioPhysical.isSelected()){
-                        data.storeNewPhysicalBook(title,author,genre,"Available");
+                        error = !data.storeNewPhysicalBook(title,author,genre,"Available");
                     } else if (radioAudio.isSelected()&&txtNarrator.getText()!=null){
                         String narrator = txtNarrator.getText();
-                        data.storeNewAudioBook(title,author,narrator,genre,"Available");
+                        error = !data.storeNewAudioBook(title,author,narrator,genre,"Available");
                     }
                     else {
                         error = true;
@@ -239,7 +239,27 @@ public class LibraryController {
 
     @FXML
     public void removeBook(){
+        vboxUserInput.getChildren().clear();
+        Label lblTitle = new Label("Title:");
+        TextField txtTitle = new TextField();
+        Label lblAuthor = new Label("Author:");
+        TextField txtAuthor = new TextField();
 
+        Button btnRemoveBook = new Button("Remove Book");
+
+        // creates book when "Remove Book" is clicked
+        btnRemoveBook.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String title = txtTitle.getText();
+                String author = txtAuthor.getText();
+                boolean error = data.removeBook(title,author);
+                if (error){
+                    System.out.println("ERROR");
+                }
+            }
+        });
+        vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,btnRemoveBook);
     }
 
     @FXML
