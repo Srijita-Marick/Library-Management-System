@@ -41,6 +41,11 @@ public class LibraryController {
         this.data = data;
     }
 
+    /**
+     * Allows the user to save a file using a file chooser dialog
+     * When button pressed , it displays a success or error message depending on the outcome
+     * @param event The ActionEvent that triggered the save action
+     */
     @FXML
     protected void save(ActionEvent event) {
         MenuItem menuItem = (MenuItem) event.getSource();
@@ -65,6 +70,11 @@ public class LibraryController {
         }
     }
 
+    /**
+     * Allows the user to load a file using a file chooser dialog
+     * When button pressed , it displays a success or error message depending on the outcome
+     * @param event The ActionEvent that triggered the load action
+     */
     @FXML
     protected void load(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -101,7 +111,11 @@ public class LibraryController {
         }
     }
 
-
+    /**
+     * Allows the user to exit the application
+     * When button pressed , it displays a confirmation message to exit
+     * @param event The ActionEvent that triggered the quit action
+     */
     @FXML
     void quit(ActionEvent event) {
         // Display confirmation dialog before quitting
@@ -117,6 +131,10 @@ public class LibraryController {
         });
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields to add a member to library
+     * When button pressed, it adds the member and displays it on the display panel
+     */
     @FXML
     public void addMember(){
         vboxUserInput.getChildren().clear();
@@ -168,6 +186,10 @@ public class LibraryController {
 
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields to remove a member to library
+     * When button pressed, it removes & deletes the member and displays it on the display panel
+     */
     @FXML
     public void removeMember(){
         vboxUserInput.getChildren().clear();
@@ -490,6 +512,11 @@ public class LibraryController {
         lblDisplay.setText(display);
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields for a user to search a book
+     * When button pressed, it searches the book based on the criteria ,and displays it on the display panel
+     * @param event The ActionEvent triggering the method call
+     */
     @FXML
     public void searchBook(ActionEvent event){
         vboxUserInput.getChildren().clear(); // clear existing content
@@ -533,6 +560,10 @@ public class LibraryController {
         lblDisplay.setText(display);
     }
 
+    /**
+     * Displays information about the library management system
+     * Shows a message with details about the application, developers, and their emails
+     */
     @FXML
     private void about(){
         String aboutMessage = "This is a library management system\n" +
