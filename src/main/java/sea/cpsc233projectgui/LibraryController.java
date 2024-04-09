@@ -177,7 +177,9 @@ public class LibraryController {
                     error = true;
                 }
                 if (error){
-                    System.out.println("ERROR");
+                    lblDisplay.setText("ERROR: Invalid Member Information");
+                } else {
+                    displayMembers(Integer.parseInt(id),name);
                 }
             }
         });
@@ -188,6 +190,11 @@ public class LibraryController {
 
     }
 
+    /**
+     * When a member type is selected, changes the menuButton to reflect the change
+     * @param menuMemberType is the MenuButton that is being changed
+     * @param menuItem  is the item represented a member type that has been selected
+     */
     void setMemAction(MenuButton menuMemberType, MenuItem menuItem){
         menuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -195,6 +202,20 @@ public class LibraryController {
                 menuMemberType.setText(menuItem.getText());
             }
         });
+    }
+
+    /**
+     * Displays a member's .toString in lblDisplay
+     * @param id of the member
+     * @param name of the member
+     */
+    void displayMembers (int id, String name){
+        ArrayList<Member> memberIds = data.getMembersById(id);
+        for (Member member : memberIds){
+            if (member.getName().equals(name)){
+                lblDisplay.setText("Added Book! "+member.toString());
+            }
+        }
     }
 
     /**
@@ -308,6 +329,7 @@ public class LibraryController {
             }
         });
 
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(menuIDs,lblPayment,txtPayment,btnPayFines);
 
     }
@@ -428,7 +450,7 @@ public class LibraryController {
                     error = true;
                 }
                 if (error){
-                    lblDisplay.setText("ERROR: invalid book information");
+                    lblDisplay.setText("ERROR: Invalid Book Information");
                 } else {
                     displayBook(title,author);
                 }
@@ -464,7 +486,7 @@ public class LibraryController {
         ArrayList<Books> titleBooks = data.getBooksByTitle(title);
         for (Books book : titleBooks){
             if (book.getAuthor().equals(author)){
-                lblDisplay.setText("Added Book!"+book.toString());
+                lblDisplay.setText("Added Book! "+book.toString());
             }
         }
     }
@@ -491,7 +513,7 @@ public class LibraryController {
                 String author = txtAuthor.getText();
                 boolean error = data.removeBook(title,author);
                 if (error){
-                    lblDisplay.setText("ERROR: could not remove book");
+                    lblDisplay.setText("ERROR: Could Not Remove Book");
                 } else {
                     displayBook(title,author);
                 }
