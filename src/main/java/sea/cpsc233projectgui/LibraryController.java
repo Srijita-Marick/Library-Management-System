@@ -272,9 +272,62 @@ public class LibraryController {
         vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
     }
 
+    /**
+     * Allows user to select from the list of user IDs, then displays the selected user
+     * When the button is clicked, fines are paid
+     */
     @FXML
     public void payFines(){
+        vboxUserInput.getChildren().clear();
+        MenuButton menuIDs = new MenuButton("Select Member ID");
+        ArrayList<Member> members = data.getAllMembers();
+        for (Member member:members){
+            MenuItem menuMember = new MenuItem(String.valueOf(member.getID()));
+            menuIDs.getItems().add(menuMember);
+            setMemberAction(menuIDs,menuMember);
+        }
+        Label lblPayment = new Label("Payment amount");
+        TextField txtPayment = new TextField();
+        Button btnPayFines = new Button("Pay Fines");
+        btnPayFines.setOnMouseClicked(new EventHandler<MouseEvent>() { //what happens when the button is pressed
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    int ID = Integer.parseInt(menuIDs.getText());
+                    double payment = Double.parseDouble(txtPayment.getText());
+                    if (data.payFines(ID,payment)){
+                        Member member = data.getMembersById(Integer.parseInt(menuIDs.getText())).getFirst();
+                        lblDisplay.setText("Payment Successful!\n"+member.toString());
+                    } else {
+                        lblDisplay.setText("ERROR: invalid payment");
+                    }
+                } catch (NumberFormatException e){
+                    lblDisplay.setText("ERROR: invalid inputs");
+                }
 
+            }
+        });
+
+        vboxUserInput.getChildren().addAll(menuIDs,lblPayment,txtPayment,btnPayFines);
+
+    }
+
+    /**
+     * called on by "payFines" to make a complete MenuButton list of the member's IDs
+     * when an option is clicked, the information is displayed
+     * @param menuButton to change the text of
+     * @param menuItem that is being clicked
+     */
+    @FXML
+    void setMemberAction(MenuButton menuButton,MenuItem menuItem){
+        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuButton.setText(menuItem.getText());
+                Member member = data.getMembersById(Integer.parseInt(menuButton.getText())).getFirst();
+                lblDisplay.setText("Member Information:\n"+member.toString());
+            }
+        });
     }
 
     @FXML
