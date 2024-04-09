@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import sea.cpsc233projectgui.objects.Books;
 import sea.cpsc233projectgui.objects.Member;
+import sea.cpsc233projectgui.util.BookType;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -659,25 +660,179 @@ public class LibraryController {
     @FXML
     public void searchBook(ActionEvent event){
         vboxUserInput.getChildren().clear(); // clear existing content
-        Label lblTitle = new Label("Search Title:");
-        TextField txtSearchTitle = new TextField();
-        Label lblAuthor = new Label("Search Author:");
 
-        TextField txtSearchAuthor = new TextField();
+        MenuButton menuSearch = new MenuButton("Search by...");
 
-        RadioButton physical = new RadioButton("Physical");
-        RadioButton audio = new RadioButton("Audiobook");
+        MenuItem searchTitle = new MenuItem("Search Title");
+        menuSearch.getItems().add(searchTitle);
+        MenuItem searchAuthor = new MenuItem("Search Author");
+        menuSearch.getItems().add(searchAuthor);
+        MenuItem searchGenre = new MenuItem("Search Genre");
+        menuSearch.getItems().add(searchGenre);
+        MenuItem searchType = new MenuItem("Search Type");
+        menuSearch.getItems().add(searchType);
 
-        Button btnSearch = new Button("Search");
+        VBox vboxSearch = new VBox(); // displays the search items depending on type of search
 
-        btnSearch.setOnAction(searchEvent -> {
-            String searchTitle = txtSearchTitle.getText().trim();
-            String searchAuthor = txtSearchAuthor.getText().trim();
-        });
+        searchTitle(searchTitle,vboxSearch);
+        searchAuthor(searchAuthor,vboxSearch);
+        searchGenre(searchGenre,vboxSearch);
+        searchType(searchType,vboxSearch);
 
-        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
-        vboxUserInput.getChildren().addAll(lblTitle, txtSearchTitle, lblAuthor, txtSearchAuthor, physical, audio, btnSearch);
+        vboxUserInput.getChildren().addAll(menuSearch, vboxSearch);
     }
+
+    /**
+     * called on by searchBook when search by title is selected
+     * @param searchTitle is the MenuItem selected
+     * @param vboxSearch is the VBox being displayed to the user
+     */
+    @FXML
+    void searchTitle(MenuItem searchTitle, VBox vboxSearch){
+        //when search by title is selected, the following happens
+        searchTitle.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                Label lblTitle = new Label("Title");
+                TextField txtTitle = new TextField();
+                Button btnSearch = new Button("Search");
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ArrayList<Books> books = data.getBooksByTitle(txtTitle.getText());
+                        String display = "Books with that title:\n";
+                        for (Books book:books){
+                            display+=book.toString();
+                        }
+                        lblDisplay.setText(display);
+                    }
+                });
+                vboxSearch.getChildren().addAll(lblTitle,txtTitle,btnSearch);
+            }
+        });
+    }
+
+
+    /**
+     * called on by searchBook when search by author is selected
+     * @param searchAuthor is the MenuItem selected
+     * @param vboxSearch is the VBox being displayed to the user
+     */
+    @FXML
+    void searchAuthor(MenuItem searchAuthor, VBox vboxSearch){
+        //when search by author is selected, the following happens
+        searchAuthor.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                Label lblAuthor = new Label("Author");
+                TextField txtAuthor = new TextField();
+                Button btnSearch = new Button("Search");
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ArrayList<Books> books = data.getBooksByAuthor(txtAuthor.getText());
+                        String display = "Books by "+txtAuthor.getText()+":\n";
+                        for (Books book:books){
+                            display+=book.toString();
+                        }
+                        lblDisplay.setText(display);
+                    }
+                });
+                vboxSearch.getChildren().addAll(lblAuthor,txtAuthor,btnSearch);
+            }
+        });
+    }
+
+
+    /**
+     * called on by searchBook when search by genre is selected
+     * @param searchGenre is the MenuItem selected
+     * @param vboxSearch is the VBox being displayed to the user
+     */
+    @FXML
+    void searchGenre(MenuItem searchGenre, VBox vboxSearch){
+        //when search by author is selected, the following happens
+        searchGenre.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                MenuButton menuGenre = new MenuButton("Genre");
+                String[] genres = new String[]{"Fantasy","General Fiction","Historical Fiction","Horror","Literary","Mystery",
+                        "Non-fiction","Poetry","Romance","Science Fiction","Thriller"};
+
+                for (String genre:genres){ //creates genres and adds them to the genre menu
+                    MenuItem menuItem = new MenuItem(genre);
+                    menuGenre.getItems().add(menuItem);
+                    setGenreAction(menuGenre,menuItem);
+                }
+
+                Button btnSearch = new Button("Search");
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        if (!menuGenre.getText().equals("Genre")) {
+                            ArrayList<Books> books = data.getBooksByGenre(menuGenre.getText());
+                            String display = menuGenre.getText() + " books:\n";
+                            for (Books book : books) {
+                                display += book.toString();
+                            }
+                            lblDisplay.setText(display);
+                        } else {
+                            lblDisplay.setText("ERROR: genre not selected");
+                        }
+                    }
+                });
+                vboxSearch.getChildren().addAll(menuGenre,btnSearch);
+            }
+        });
+    }
+
+    /**
+     * called on by searchBook when search by type is selected
+     * @param searchType is the MenuItem selected
+     * @param vboxSearch is the VBox being displayed to the user
+     */
+    @FXML
+    void searchType(MenuItem searchType, VBox vboxSearch){
+        //when search by type is selected, the following happens
+        searchType.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                MenuButton menuType = new MenuButton("Type");
+                String[] types = new String[]{BookType.PHYSICAL.toString(),BookType.AUDIO.toString()};
+
+                for (String type:types){ // using genre code, it adds them to the type menu
+                    MenuItem menuItem = new MenuItem(type);
+                    menuType.getItems().add(menuItem);
+                    setGenreAction(menuType,menuItem);
+                }
+
+                Button btnSearch = new Button("Search");
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        if (!menuType.getText().equals("Type")) {
+                            ArrayList<Books> books = data.getBooksByBookType(menuType.getText());
+                            String display = menuType.getText() + " books:\n";
+                            for (Books book : books) {
+                                display += book.toString();
+                            }
+                            lblDisplay.setText(display);
+                        } else {
+                            lblDisplay.setText("ERROR: type not selected");
+                        }
+                    }
+                });
+                vboxSearch.getChildren().addAll(menuType,btnSearch);
+            }
+        });
+    }
+
 
     /**
      * Goes through each genre and displays the most popular book in that genre
