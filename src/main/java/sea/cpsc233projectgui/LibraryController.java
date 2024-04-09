@@ -679,6 +679,7 @@ public class LibraryController {
         searchGenre(searchGenre,vboxSearch,menuSearch);
         searchType(searchType,vboxSearch,menuSearch);
 
+        vboxUserInput.setSpacing(10);
         vboxUserInput.getChildren().addAll(menuSearch, vboxSearch);
     }
 
@@ -709,6 +710,7 @@ public class LibraryController {
                         lblDisplay.setText(display);
                     }
                 });
+                vboxSearch.setSpacing(10);
                 vboxSearch.getChildren().addAll(lblTitle,txtTitle,btnSearch);
             }
         });
@@ -742,6 +744,7 @@ public class LibraryController {
                         lblDisplay.setText(display);
                     }
                 });
+                vboxSearch.setSpacing(10);
                 vboxSearch.getChildren().addAll(lblAuthor,txtAuthor,btnSearch);
             }
         });
@@ -788,6 +791,7 @@ public class LibraryController {
                         }
                     }
                 });
+                vboxSearch.setSpacing(10);
                 vboxSearch.getChildren().addAll(menuGenre,btnSearch);
             }
         });
@@ -832,6 +836,7 @@ public class LibraryController {
                         }
                     }
                 });
+                vboxSearch.setSpacing(10);
                 vboxSearch.getChildren().addAll(menuType,btnSearch);
             }
         });
