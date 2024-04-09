@@ -213,7 +213,7 @@ public class LibraryController {
         ArrayList<Member> memberIds = data.getMembersById(id);
         for (Member member : memberIds){
             if (member.getName().equals(name)){
-                lblDisplay.setText("Added Book! "+member.toString());
+                lblDisplay.setText("Added Member! "+member.toString());
             }
         }
     }
