@@ -12,7 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import sea.cpsc233projectgui.objects.Books;
 import sea.cpsc233projectgui.objects.Member;
+import sea.cpsc233projectgui.util.BookRecords;
 import sea.cpsc233projectgui.util.BookType;
+import sea.cpsc233projectgui.util.MemberRecords;
 import sea.cpsc233projectgui.util.MemberType;
 
 import java.io.*;
@@ -78,32 +80,42 @@ public class LibraryController {
      * @param event The ActionEvent that triggered the load action
      */
     @FXML
-    protected void load(ActionEvent event){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load File");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
-                new FileChooser.ExtensionFilter("All Files", "*.*")
-        );
+    void load(ActionEvent event){
+        // Show alert
+        a.setAlertType(Alert.AlertType.INFORMATION);
+        a.setContentText("Choose Member File");
+        a.show();
+        File memberFile = getFile(event);
+        // Show alert
+        a.setAlertType(Alert.AlertType.INFORMATION);
+        a.setContentText("Choose Book File");
+        a.show();
+        File bookFile = getFile(event);
+        load(memberFile,bookFile);
+    }
 
-        MenuItem menuItem = (MenuItem) event.getSource();
-        loadedFile = fileChooser.showOpenDialog(menuItem.getParentPopup().getOwnerWindow());
-
-        if (loadedFile != null) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(loadedFile))) {
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    content.append(line).append("\n");
-                }
-
-                // Show alert
-                a.setAlertType(Alert.AlertType.INFORMATION);
-                a.setContentText("File Load Successful: " + loadedFile.getName());
-                a.show();
-            } catch (IOException e) {
+    /**
+     * loads the new files int Data... can be called on from command line arguments as well
+     * @param memberFile is file containing member info
+     * @param bookFile is file containing book info
+     */
+    @FXML
+    void load (File memberFile, File bookFile){
+        if (memberFile!=null&&bookFile!=null){
+            Data newData = MemberRecords.load(memberFile,data);
+            if (newData!=null){
+                setData(newData);
+            } else {
                 a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Error loading file: " + e.getMessage());
+                a.setContentText("Invalid format for member file");
+                a.show();
+            }
+            newData = BookRecords.load(bookFile,data);
+            if (newData!=null){
+                setData(newData);
+            } else {
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Invalid format for book file");
                 a.show();
             }
         } else {
@@ -111,7 +123,31 @@ public class LibraryController {
             a.setContentText("File Load Failed");
             a.show();
         }
+
     }
+
+    @FXML
+    File getFile(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
+
+        MenuItem menuItem = (MenuItem) event.getSource();
+        loadedFile = fileChooser.showOpenDialog(menuItem.getParentPopup().getOwnerWindow());
+
+        if (loadedFile != null) {
+            return loadedFile;
+        } else {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("File Load Failed");
+            a.show();
+            return null;
+        }
+    }
+
 
     /**
      * Allows the user to exit the application
