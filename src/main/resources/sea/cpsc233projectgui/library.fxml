@@ -23,7 +23,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Member">
               <items>
-                <MenuItem mnemonicParsing="false" text="Add" />
+                <MenuItem mnemonicParsing="false" onAction="#addMember" text="Add" />
                   <MenuItem mnemonicParsing="false" text="Remove" />
                   <MenuItem mnemonicParsing="false" text="View All" />
                   <MenuItem mnemonicParsing="false" text="Search" />
@@ -36,7 +36,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#addBook" text="Add" />
                   <MenuItem mnemonicParsing="false" onAction="#removeBook" text="Remove" />
-                  <MenuItem mnemonicParsing="false" text="Checkout" />
+                  <MenuItem mnemonicParsing="false" onAction="#checkoutBook" text="Checkout" />
                   <MenuItem mnemonicParsing="false" text="Return" />
                   <MenuItem mnemonicParsing="false" onAction="#viewBook" text="View..." />
                   <MenuItem mnemonicParsing="false" onAction="#searchBook" text="Search..." />

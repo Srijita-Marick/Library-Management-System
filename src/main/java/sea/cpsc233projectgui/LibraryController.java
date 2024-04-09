@@ -388,7 +388,7 @@ public class LibraryController {
                         lblDisplay.setText("ERROR: that book is currently unavailable");
                     } else {
                         data.checkoutBook(id,title,author);
-                        lblDisplay.setText(title+" by "+author +"was checked out by...\n"+ data.getMembersById(id).toString());
+                        lblDisplay.setText(title+" by "+author +"was checked out by...\n"+ data.getMembersById(id).getFirst().toString());
                     }
 
                     data.checkoutBook(id,txtTitle.getText(),txtAuthor.getText());
@@ -397,9 +397,7 @@ public class LibraryController {
                 }
             }
         });
-
-
-
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblTitle,txtTitle,lblAuthor,txtAuthor,btnCheckout);
 
     }
 
