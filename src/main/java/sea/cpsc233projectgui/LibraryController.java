@@ -403,7 +403,46 @@ public class LibraryController {
 
     @FXML
     public void returnBook(){
+        vboxUserInput.getChildren().clear();
+        Label lblID = new Label("Member ID");
+        TextField txtID = new TextField();
+        Label lblTitle = new Label("Book Title");
+        TextField txtTitle = new TextField();
+        Label lblAuthor = new Label("Book Author");
+        TextField txtAuthor = new TextField();
+        Button btnReturn = new Button("Return");
+        TextField txtDaysOverdue = new TextField();
+        Button btnDaysOverdue = new Button("Days Overdue");
 
+        btnReturn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    int id = Integer.parseInt(txtID.getText());
+                    String title = txtTitle.getText();
+                    String author = txtAuthor.getText();
+                    int days = Integer.parseInt(txtDaysOverdue.getText());
+                    if (!data.checkExistMember(id)){
+                        lblDisplay.setText("ERROR: that member does not exist");
+                    } else if (!data.checkExistBook(title,author)){
+                        lblDisplay.setText("ERROR: the library does not own that book");
+                    } else if (!data.checkBookAvailable(title,author)){
+                        lblDisplay.setText("ERROR: that book is currently unavailable");
+                    } else if (days<0){
+                        lblDisplay.setText("ERROR: invalid numerical input");
+                    }
+                    else {
+                        data.checkoutBook(id,title,author);
+                        lblDisplay.setText(title+" by "+author +"was return by...\n"+ data.getMembersById(id).getFirst().toString());
+                    }
+
+                    data.returnBook(id,txtTitle.getText(),txtAuthor.getText(),days);
+                } catch (NumberFormatException e){
+                    lblDisplay.setText("ERROR: invalid numerical input");
+                }
+            }
+        });
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblTitle,txtTitle,lblAuthor,txtAuthor,btnReturn);
     }
 
     @FXML

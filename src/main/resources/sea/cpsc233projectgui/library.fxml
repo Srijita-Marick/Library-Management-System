@@ -37,7 +37,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#addBook" text="Add" />
                   <MenuItem mnemonicParsing="false" onAction="#removeBook" text="Remove" />
                   <MenuItem mnemonicParsing="false" onAction="#checkoutBook" text="Checkout" />
-                  <MenuItem mnemonicParsing="false" text="Return" />
+                  <MenuItem mnemonicParsing="false" onAction="#returnBook" text="Return" />
                   <MenuItem mnemonicParsing="false" onAction="#viewBook" text="View..." />
                   <MenuItem mnemonicParsing="false" onAction="#searchBook" text="Search..." />
                   <MenuItem mnemonicParsing="false" onAction="#mostPopularBook" text="Most Popular" />
