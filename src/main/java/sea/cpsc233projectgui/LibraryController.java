@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
@@ -12,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import sea.cpsc233projectgui.objects.Books;
+import sea.cpsc233projectgui.objects.Member;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class LibraryController {
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
-    private Data data = new Data();
+    private Data data;
     public void setData(Data data) {
         this.data = data;
     }
@@ -131,7 +131,7 @@ public class LibraryController {
         for (String type:memType){ //creates genres and adds them to the genre menu
             MenuItem menuItem = new MenuItem(type);
             menuMemberType.getItems().add(menuItem);
-            setMemAction(menuMemberType,menuItem);
+            setGenreAction(menuMemberType,menuItem);
         }
 
         Button btnAddMem = new Button("Add Member");
@@ -140,16 +140,15 @@ public class LibraryController {
         btnAddMem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String id = txtID.getText();
+                Integer id = Integer.parseInt(txtID.getText());
                 String name = txtName.getText();
                 boolean error = false;
-                if (!menuMemberType.getText().equals("Member Type:") && !id.isEmpty() && !name.isEmpty()){
+                if (!menuMemberType.getText().equals("Member Type:") && id!=null && name!=null){
                     String type = menuMemberType.getText();
-                    Integer id1 = Integer.parseInt(txtID.getText());
                     if (type.equals("ADULT")){
-                        error = !data.storeNewAdultMember(id1,name);
+                        error = !data.storeNewAdultMember(id,name);
                     } else if (type.equals("CHILD")){
-                        error = !data.storeNewChildMember(id1,name);
+                        error = !data.storeNewChildMember(id,name);
                     }
                     else {
                         error = true;
@@ -165,20 +164,8 @@ public class LibraryController {
         });
 
         //add all these items to the display box...
-        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
-        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName);
-        vboxUserInput.getChildren().add(menuMemberType);
-        vboxUserInput.getChildren().add(btnAddMem);
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,menuMemberType);
 
-    }
-
-    void setMemAction(MenuButton menuMemberType, MenuItem menuItem){
-        menuItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                menuMemberType.setText(menuItem.getText());
-            }
-        });
     }
 
     @FXML
@@ -193,9 +180,9 @@ public class LibraryController {
 
         // deletes member when "Remove Member" button is clicked
 
-        btnRemoveMember.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        btnRemoveMember.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle(ActionEvent event) {
                 boolean error = false;
                 try {
                     int id = Integer.parseInt(txtID.getText());
@@ -213,9 +200,19 @@ public class LibraryController {
         vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,btnRemoveMember);
     }
 
+    /**
+     * Displays all members on lblDisplay
+     */
     @FXML
     public void viewAllMembers(){
+        vboxUserInput.getChildren().clear();
 
+        String display ="All Members:"; // text to be displayed
+        ArrayList<Member> members = data.getAllMembers();
+        for (Member member: members){
+            display += member.toString();
+        }
+        lblDisplay.setText(display);
     }
 
     @FXML

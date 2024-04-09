@@ -24,12 +24,12 @@
             <Menu mnemonicParsing="false" text="Member">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#addMember" text="Add" />
-                  <MenuItem mnemonicParsing="false" text="Remove" />
-                  <MenuItem mnemonicParsing="false" text="View All" />
-                  <MenuItem mnemonicParsing="false" text="Search" />
-                  <MenuItem mnemonicParsing="false" text="Pay Fines" />
-                  <MenuItem mnemonicParsing="false" text="Average Days Overdue" />
-                  <MenuItem mnemonicParsing="false" text="Most Active Child" />
+                  <MenuItem mnemonicParsing="false" onAction="#removeMember" text="Remove" />
+                  <MenuItem mnemonicParsing="false" onAction="#viewAllMembers" text="View All" />
+                  <MenuItem mnemonicParsing="false" onAction="#searchMember" text="Search" />
+                  <MenuItem mnemonicParsing="false" onAction="#payFines" text="Pay Fines" />
+                  <MenuItem mnemonicParsing="false" onAction="#averageDaysOverdue" text="Average Days Overdue" />
+                  <MenuItem mnemonicParsing="false" onAction="#mostActiveChild" text="Most Active Child" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Book">
