@@ -36,7 +36,7 @@ public class LibraryController {
 
     private Alert a = new Alert(Alert.AlertType.NONE);
 
-    private Data data;
+    private Data data = new Data();
     public void setData(Data data) {
         this.data = data;
     }
@@ -230,6 +230,8 @@ public class LibraryController {
                 }
             }
         });
+
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,btnRemoveMember);
     }
 
@@ -369,6 +371,7 @@ public class LibraryController {
         });
 
         //add all these items to the display box...
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,menuGenre,radioPhysical,radioAudio,lblNarrator,txtNarrator,btnAddBook);
 
     }
@@ -429,6 +432,8 @@ public class LibraryController {
                 }
             }
         });
+
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,btnRemoveBook);
     }
 
@@ -471,6 +476,8 @@ public class LibraryController {
                 }
             }
         });
+
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblID,txtID,lblTitle,txtTitle,lblAuthor,txtAuthor,btnCheckout);
 
     }
@@ -522,6 +529,8 @@ public class LibraryController {
                 }
             }
         });
+
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblID,txtID,lblTitle,txtTitle,lblAuthor,txtAuthor,lblDaysOverdue,txtDaysOverdue,btnReturn);
     }
 
@@ -564,6 +573,7 @@ public class LibraryController {
             String searchAuthor = txtSearchAuthor.getText().trim();
         });
 
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblTitle, txtSearchTitle, lblAuthor, txtSearchAuthor, physical, audio, btnSearch);
     }
 
