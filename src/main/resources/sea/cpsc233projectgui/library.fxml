@@ -40,7 +40,7 @@
                   <MenuItem mnemonicParsing="false" text="Return" />
                   <MenuItem mnemonicParsing="false" onAction="#viewBook" text="View..." />
                   <MenuItem mnemonicParsing="false" onAction="#searchBook" text="Search..." />
-                  <MenuItem mnemonicParsing="false" text="Most Popular" />
+                  <MenuItem mnemonicParsing="false" onAction="#mostPopularBook" text="Most Popular" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

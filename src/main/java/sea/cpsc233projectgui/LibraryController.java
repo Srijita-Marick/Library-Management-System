@@ -409,7 +409,16 @@ public class LibraryController {
 
     @FXML
     public void mostPopularBook(){
+        vboxUserInput.getChildren().clear();
+        String[] genres = new String[]{"Fantasy","General Fiction","Historical Fiction","Horror","Literary","Mystery",
+                "Non-fiction","Poetry","Romance","Science Fiction","Thriller"};
 
+        String display = "Most Popular Book in Each Genre\n--------------------\n";
+
+        for (String genre:genres){ //creates genres and adds them to the genre menu
+            display += genre + data.mostPopularBookByGenre(genre).toString();
+        }
+        lblDisplay.setText(display);
     }
 
     @FXML

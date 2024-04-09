@@ -273,9 +273,9 @@ public class Data {
     public String mostPopularBookByGenre(String genre){
         ArrayList<Books> books = getBooksByGenre(genre);
         int checkOutTotal=0;
-        String bookString="";
+        String bookString="\n--------------------\n";
         for (Books book:books){
-            if (book.getNumOfCheckOuts()>checkOutTotal){
+            if (book.getNumOfCheckOuts()>=checkOutTotal){
                 checkOutTotal=book.getNumOfCheckOuts();
                 bookString=book.toString();
             }
