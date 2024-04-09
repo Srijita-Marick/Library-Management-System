@@ -12,9 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import sea.cpsc233projectgui.objects.Books;
 import sea.cpsc233projectgui.objects.Member;
-import sea.cpsc233projectgui.util.BookRecords;
 import sea.cpsc233projectgui.util.BookType;
-import sea.cpsc233projectgui.util.MemberRecords;
+import sea.cpsc233projectgui.util.MemberType;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class LibraryController {
     private Alert a = new Alert(Alert.AlertType.NONE);
 
     private Data data = new Data();
-    public void setData(Data data) {
+    private void setData(Data data) {
         this.data = data;
     }
 
@@ -79,59 +78,11 @@ public class LibraryController {
      * @param event The ActionEvent that triggered the load action
      */
     @FXML
-    void load(ActionEvent event){
-        // Show alert
-        a.setAlertType(Alert.AlertType.INFORMATION);
-        a.setContentText("Choose Member File");
-        a.showAndWait();
-        File memberFile = getFile(event);
-        // Show alert
-        a.setAlertType(Alert.AlertType.INFORMATION);
-        a.setContentText("Choose Book File");
-        a.showAndWait();
-        File bookFile = getFile(event);
-        load(memberFile,bookFile);
-
-    }
-
-    /**
-     * loads the new files int Data... can be called on from command line arguments as well
-     * @param memberFile is file containing member info
-     * @param bookFile is file containing book info
-     */
-    @FXML
-    void load (File memberFile, File bookFile){
-        if (memberFile!=null&&bookFile!=null){
-            Data newData = MemberRecords.load(memberFile,data);
-            if (newData!=null){
-                setData(newData);
-            } else {
-                a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Invalid format for member file");
-                a.showAndWait();
-            }
-            newData = BookRecords.load(bookFile,data);
-            if (newData!=null){
-                setData(newData);
-            } else {
-                a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Invalid format for book file");
-                a.showAndWait();
-            }
-        } else {
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("File Load Failed");
-            a.showAndWait();
-        }
-
-    }
-
-    @FXML
-    File getFile(ActionEvent event){
+    protected void load(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load File");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV Files", "*.csv"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
                 new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
@@ -139,14 +90,29 @@ public class LibraryController {
         loadedFile = fileChooser.showOpenDialog(menuItem.getParentPopup().getOwnerWindow());
 
         if (loadedFile != null) {
-            return loadedFile;
+            try (BufferedReader reader = new BufferedReader(new FileReader(loadedFile))) {
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append("\n");
+                }
+
+                // Show alert
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("File Load Successful: " + loadedFile.getName());
+                a.show();
+            } catch (IOException e) {
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Error loading file: " + e.getMessage());
+                a.show();
+            }
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("File Load Failed");
-            a.showAndWait();
-            return null;
+            a.show();
         }
     }
+
     /**
      * Allows the user to exit the application
      * When button pressed , it displays a confirmation message to exit
@@ -166,6 +132,7 @@ public class LibraryController {
             }
         });
     }
+
     /**
      * Edits the vboxUserInput to have the correct fields to add a member to library
      * When button pressed, it adds the member and displays it on the display panel
@@ -314,24 +281,121 @@ public class LibraryController {
     @FXML
     public void searchMember(ActionEvent event){
         vboxUserInput.getChildren().clear(); // clear existing content
-        Label lblID = new Label("Search ID:");
-        TextField txtSearchID = new TextField();
-        Label lblName = new Label("Search Name:");
-        TextField txtSearchName = new TextField();
 
-        RadioButton adult = new RadioButton("Adult");
-        RadioButton child = new RadioButton("Child");
+        MenuButton menuSearch = new MenuButton("Search by...");
 
-        Button btnSearch = new Button("Search");
+        MenuItem searchId = new MenuItem("Search Id");
+        menuSearch.getItems().add(searchId);
+        MenuItem searchName = new MenuItem("Search Name");
+        menuSearch.getItems().add(searchName);
+        MenuItem searchType = new MenuItem("Search Member Type");
+        menuSearch.getItems().add(searchType);
 
-        btnSearch.setOnAction(searchEvent -> {
-            String searchTitle = txtSearchID.getText().trim();
-            String searchAuthor = txtSearchName.getText().trim();
-        });
-
-        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
-        vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
+//        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
+//        vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
     }
+
+    @FXML
+    void searchId(MenuItem searchId, VBox vboxSearch,MenuButton menuSearch){
+        //when search by id is selected, the following happens
+        searchId.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                menuSearch.setText(searchId.getText());
+                Label lblId = new Label("Id");
+                TextField txtId = new TextField();
+                int memberId = Integer.parseInt(txtId.getText());
+                Button btnSearch = new Button("Search");
+
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ArrayList<Member> members = data.getMembersById(memberId);
+                        String display = "Members with that id:\n";
+                        for (Member member:members){
+                            display += member.toString();
+                        }
+                        lblDisplay.setText(display);
+                    }
+                });
+
+                vboxSearch.setSpacing(10);
+                vboxSearch.getChildren().addAll(lblId, txtId, btnSearch);
+            }
+        });
+    }
+
+    @FXML
+    void searchName(MenuItem searchName, VBox vboxSearch,MenuButton menuSearch){
+        //when search by name is selected, the following happens
+        searchName.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                menuSearch.setText(searchName.getText());
+                Label lblName = new Label("Name");
+                TextField txtName = new TextField();
+                Button btnSearch = new Button("Search");
+
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ArrayList<Member> members = data.getMembersByName(txtName.getText());
+                        String display = "Members with that id:\n";
+                        for (Member member:members){
+                            display += member.toString();
+                        }
+                        lblDisplay.setText(display);
+                    }
+                });
+
+                vboxSearch.setSpacing(10);
+                vboxSearch.getChildren().addAll(lblName, txtName, btnSearch);
+            }
+        });
+    }
+
+    @FXML
+    void searchMemberType(MenuItem searchMemberType, VBox vboxSearch,MenuButton menuSearch){
+        //when search by member type is selected, the following happens
+        searchMemberType.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuSearch.setText(searchMemberType.getText());
+                vboxSearch.getChildren().clear();
+                MenuButton menuType = new MenuButton("Type");
+                String[] types = new String[]{MemberType.CHILD.toString(), MemberType.ADULT.toString()};
+
+                for (String type:types){
+                    MenuItem menuItem = new MenuItem(type);
+                    menuType.getItems().add(menuItem);
+                    setGenreAction(menuType,menuItem);
+                }
+
+                Button btnSearch = new Button("Search");
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        if (!menuType.getText().equals("Member Type")) {
+                            ArrayList<Member> members = data.getMembersByMemberType(menuType.getText());
+                            String display = menuType.getText() + " members:\n";
+                            for (Member member : members) {
+                                display += member.toString();
+                            }
+                            lblDisplay.setText(display);
+                        } else {
+                            lblDisplay.setText("ERROR: type not selected");
+                        }
+                    }
+                });
+                vboxSearch.setSpacing(10);
+                vboxSearch.getChildren().addAll(menuType,btnSearch);
+            }
+        });
+    }
+
 
     /**
      * Allows user to select from the list of user IDs, then displays the selected user
@@ -904,9 +968,9 @@ public class LibraryController {
      */
     @FXML
     private void about(){
-        String aboutMessage = "This is a library management system\n" +
-                "Developers:\n Anna Littkemann, Emily Ng Kwong Sang, Srijita Marick\n" +
-                "Emails:\nlittkemann@ucalgary.ca, emily.ngkwongsang@ucalgary.ca," +
+        String aboutMessage = "Welcome to our library management system!\n" +
+                "Developers:\nAnna Littkemann, Emily Ng Kwong Sang, Srijita Marick\n" +
+                "Emails:\nanna.littkemann@ucalgary.ca, emily.ngkwongsang@ucalgary.ca," +
                 "  srijita.marick@ucalgary.ca";
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
