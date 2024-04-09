@@ -492,7 +492,7 @@ public class LibraryController {
 
     @FXML
     public void searchBook(ActionEvent event){
-        vboxUserInput.getChildren().clear();
+        vboxUserInput.getChildren().clear(); // clear existing content
         Label lblTitle = new Label("Search Title:");
         TextField txtSearchTitle = new TextField();
         Label lblAuthor = new Label("Search Author:");
@@ -509,7 +509,6 @@ public class LibraryController {
             String searchAuthor = txtSearchAuthor.getText().trim();
         });
 
-        vboxUserInput.getChildren().clear(); // Clear existing content
         vboxUserInput.getChildren().addAll(lblTitle, txtSearchTitle, lblAuthor, txtSearchAuthor, physical, audio, btnSearch);
     }
 
