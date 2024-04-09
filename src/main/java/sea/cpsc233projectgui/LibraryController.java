@@ -674,10 +674,10 @@ public class LibraryController {
 
         VBox vboxSearch = new VBox(); // displays the search items depending on type of search
 
-        searchTitle(searchTitle,vboxSearch);
-        searchAuthor(searchAuthor,vboxSearch);
-        searchGenre(searchGenre,vboxSearch);
-        searchType(searchType,vboxSearch);
+        searchTitle(searchTitle,vboxSearch,menuSearch);
+        searchAuthor(searchAuthor,vboxSearch,menuSearch);
+        searchGenre(searchGenre,vboxSearch,menuSearch);
+        searchType(searchType,vboxSearch,menuSearch);
 
         vboxUserInput.getChildren().addAll(menuSearch, vboxSearch);
     }
@@ -688,12 +688,13 @@ public class LibraryController {
      * @param vboxSearch is the VBox being displayed to the user
      */
     @FXML
-    void searchTitle(MenuItem searchTitle, VBox vboxSearch){
+    void searchTitle(MenuItem searchTitle, VBox vboxSearch,MenuButton menuSearch){
         //when search by title is selected, the following happens
         searchTitle.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 vboxSearch.getChildren().clear();
+                menuSearch.setText(searchTitle.getText());
                 Label lblTitle = new Label("Title");
                 TextField txtTitle = new TextField();
                 Button btnSearch = new Button("Search");
@@ -720,12 +721,13 @@ public class LibraryController {
      * @param vboxSearch is the VBox being displayed to the user
      */
     @FXML
-    void searchAuthor(MenuItem searchAuthor, VBox vboxSearch){
+    void searchAuthor(MenuItem searchAuthor, VBox vboxSearch,MenuButton menuSearch){
         //when search by author is selected, the following happens
         searchAuthor.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 vboxSearch.getChildren().clear();
+                menuSearch.setText(searchAuthor.getText());
                 Label lblAuthor = new Label("Author");
                 TextField txtAuthor = new TextField();
                 Button btnSearch = new Button("Search");
@@ -752,11 +754,12 @@ public class LibraryController {
      * @param vboxSearch is the VBox being displayed to the user
      */
     @FXML
-    void searchGenre(MenuItem searchGenre, VBox vboxSearch){
+    void searchGenre(MenuItem searchGenre, VBox vboxSearch,MenuButton menuSearch){
         //when search by author is selected, the following happens
         searchGenre.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                menuSearch.setText(searchGenre.getText());
                 vboxSearch.getChildren().clear();
                 MenuButton menuGenre = new MenuButton("Genre");
                 String[] genres = new String[]{"Fantasy","General Fiction","Historical Fiction","Horror","Literary","Mystery",
@@ -796,11 +799,12 @@ public class LibraryController {
      * @param vboxSearch is the VBox being displayed to the user
      */
     @FXML
-    void searchType(MenuItem searchType, VBox vboxSearch){
+    void searchType(MenuItem searchType, VBox vboxSearch,MenuButton menuSearch){
         //when search by type is selected, the following happens
         searchType.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                menuSearch.setText(searchType.getText());
                 vboxSearch.getChildren().clear();
                 MenuButton menuType = new MenuButton("Type");
                 String[] types = new String[]{BookType.PHYSICAL.toString(),BookType.AUDIO.toString()};
