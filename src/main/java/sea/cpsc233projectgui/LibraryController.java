@@ -149,7 +149,7 @@ public class LibraryController {
         for (String type:memType){ //creates genres and adds them to the genre menu
             MenuItem menuItem = new MenuItem(type);
             menuMemberType.getItems().add(menuItem);
-            setGenreAction(menuMemberType,menuItem);
+            setMemAction(menuMemberType,menuItem);
         }
 
         Button btnAddMem = new Button("Add Member");
@@ -158,15 +158,16 @@ public class LibraryController {
         btnAddMem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Integer id = Integer.parseInt(txtID.getText());
+                String id = txtID.getText();
                 String name = txtName.getText();
                 boolean error = false;
-                if (!menuMemberType.getText().equals("Member Type:") && id!=null && name!=null){
+                if (!menuMemberType.getText().equals("Member Type:") && !id.isEmpty() && !name.isEmpty()){
                     String type = menuMemberType.getText();
+                    Integer id1 = Integer.parseInt(txtID.getText());
                     if (type.equals("ADULT")){
-                        error = !data.storeNewAdultMember(id,name);
+                        error = !data.storeNewAdultMember(id1,name);
                     } else if (type.equals("CHILD")){
-                        error = !data.storeNewChildMember(id,name);
+                        error = !data.storeNewChildMember(id1,name);
                     }
                     else {
                         error = true;
@@ -176,14 +177,26 @@ public class LibraryController {
                     error = true;
                 }
                 if (error){
-                    lblDisplay.setText("ERROR: could not add member");
+                    System.out.println("ERROR");
                 }
             }
         });
 
         //add all these items to the display box...
-        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,menuMemberType);
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName);
+        vboxUserInput.getChildren().add(menuMemberType);
+        vboxUserInput.getChildren().add(btnAddMem);
 
+    }
+
+    void setMemAction(MenuButton menuMemberType, MenuItem menuItem){
+        menuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuMemberType.setText(menuItem.getText());
+            }
+        });
     }
 
     /**
