@@ -11,20 +11,33 @@
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
-            <PasswordField layoutX="90.0" layoutY="278.0" prefHeight="31.0" prefWidth="172.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #9bddff; -fx-border-width: 0px 0px 2px 0px;">
+            <PasswordField layoutX="90.0" layoutY="269.0" prefHeight="31.0" prefWidth="172.0" promptText="Enter your password..." style="-fx-background-color: transparent; -fx-border-color: #9bddff;">
                <font>
                   <Font size="14.0" />
                </font></PasswordField>
-            <TextField layoutX="89.0" layoutY="239.0" promptText="User Name" style="-fx-background-color: transparent; -fx-border-color: #9bddff; -fx-border-width: 0px 0px 2px 0px;">
+            <TextField layoutX="90.0" layoutY="198.0" prefHeight="27.0" prefWidth="173.0" promptText="Enter your full name..." style="-fx-background-color: transparent; -fx-border-color: #9bddff;">
                <font>
                   <Font size="14.0" />
                </font></TextField>
-            <Text fill="#9bddff" layoutX="102.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Librarian Login" wrappingWidth="147.13671875">
+            <Text fill="#9bddff" layoutX="103.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Librarian Login" wrappingWidth="147.13671875">
                <font>
                   <Font size="22.0" />
                </font>
             </Text>
-            <Button layoutX="125.0" layoutY="361.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #9bddff;" text="Login" />
+            <Button layoutX="125.0" layoutY="355.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #9bddff;" text="Login">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Text fill="#9bddff" layoutX="89.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="147.13671875">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fill="#9bddff" layoutX="89.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="147.13671875">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </right>
