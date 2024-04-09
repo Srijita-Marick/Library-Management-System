@@ -92,10 +92,6 @@ public class LibraryController {
         File bookFile = getFile(event);
         load(memberFile,bookFile);
 
-
-
-
-
     }
 
     /**
@@ -151,7 +147,25 @@ public class LibraryController {
             return null;
         }
     }
-
+    /**
+     * Allows the user to exit the application
+     * When button pressed , it displays a confirmation message to exit
+     * @param event The ActionEvent that triggered the quit action
+     */
+    @FXML
+    void quit(ActionEvent event) {
+        // Display confirmation dialog before quitting
+        Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmDialog.setTitle("Confirm Exit");
+        confirmDialog.setHeaderText(null);
+        confirmDialog.setContentText("Are you sure you want to exit?");
+        confirmDialog.showAndWait().ifPresent(response -> {
+            if (response == javafx.scene.control.ButtonType.OK) {
+                // Close the application
+                Platform.exit();
+            }
+        });
+    }
     /**
      * Edits the vboxUserInput to have the correct fields to add a member to library
      * When button pressed, it adds the member and displays it on the display panel
