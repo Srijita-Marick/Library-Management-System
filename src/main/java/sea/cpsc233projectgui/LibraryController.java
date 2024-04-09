@@ -184,9 +184,7 @@ public class LibraryController {
 
         //add all these items to the display box...
         vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
-        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName);
-        vboxUserInput.getChildren().add(menuMemberType);
-        vboxUserInput.getChildren().add(btnAddMem);
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblName,txtName,menuMemberType,btnAddMem);
 
     }
 
@@ -268,6 +266,7 @@ public class LibraryController {
             String searchAuthor = txtSearchName.getText().trim();
         });
 
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
         vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
     }
 
