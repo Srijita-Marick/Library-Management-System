@@ -85,38 +85,48 @@ public class LibraryController {
         a.setContentText("Choose Member File");
         a.show();
         File memberFile = getFile(event);
-        Data newData = MemberRecords.load(memberFile,data);
-        if (newData!=null){
-            setData(newData);
-            // Show alert
-            a.setAlertType(Alert.AlertType.INFORMATION);
-            a.setContentText("File Load Successful: " + loadedFile.getName());
-            a.show();
-            // Show alert
-            a.setAlertType(Alert.AlertType.INFORMATION);
-            a.setContentText("Choose Book File");
-            a.show();
-            File bookFile = getFile(event);
+        // Show alert
+        a.setAlertType(Alert.AlertType.INFORMATION);
+        a.setContentText("Choose Book File");
+        a.show();
+        File bookFile = getFile(event);
+        load(memberFile,bookFile);
+
+
+
+
+
+    }
+
+    /**
+     * loads the new files int Data... can be called on from command line arguments as well
+     * @param memberFile is file containing member info
+     * @param bookFile is file containing book info
+     */
+    @FXML
+    void load (File memberFile, File bookFile){
+        if (memberFile!=null&&bookFile!=null){
+            Data newData = MemberRecords.load(memberFile,data);
+            if (newData!=null){
+                setData(newData);
+            } else {
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Invalid format for member file");
+                a.show();
+            }
             newData = BookRecords.load(bookFile,data);
             if (newData!=null){
                 setData(newData);
-                // Show alert
-                a.setAlertType(Alert.AlertType.INFORMATION);
-                a.setContentText("File Load Successful: " + loadedFile.getName());
-                a.show();
-            }
-            else {
+            } else {
                 a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("File Load Failed");
+                a.setContentText("Invalid format for book file");
                 a.show();
             }
-
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("File Load Failed");
             a.show();
         }
-
 
     }
 
