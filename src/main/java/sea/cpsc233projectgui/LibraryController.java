@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import sea.cpsc233projectgui.objects.Books;
 import sea.cpsc233projectgui.objects.Member;
 import sea.cpsc233projectgui.util.BookType;
+import sea.cpsc233projectgui.util.MemberType;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -287,7 +288,7 @@ public class LibraryController {
         menuSearch.getItems().add(searchId);
         MenuItem searchName = new MenuItem("Search Name");
         menuSearch.getItems().add(searchName);
-        MenuItem searchType = new MenuItem("Search Type");
+        MenuItem searchType = new MenuItem("Search Member Type");
         menuSearch.getItems().add(searchType);
 
 //        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
@@ -351,6 +352,46 @@ public class LibraryController {
 
                 vboxSearch.setSpacing(10);
                 vboxSearch.getChildren().addAll(lblName, txtName, btnSearch);
+            }
+        });
+    }
+
+    @FXML
+    void searchMemberType(MenuItem searchMemberType, VBox vboxSearch,MenuButton menuSearch){
+        //when search by member type is selected, the following happens
+        searchMemberType.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                menuSearch.setText(searchMemberType.getText());
+                vboxSearch.getChildren().clear();
+                MenuButton menuType = new MenuButton("Type");
+                String[] types = new String[]{MemberType.CHILD.toString(), MemberType.ADULT.toString()};
+
+                for (String type:types){
+                    MenuItem menuItem = new MenuItem(type);
+                    menuType.getItems().add(menuItem);
+                    setGenreAction(menuType,menuItem);
+                }
+
+                Button btnSearch = new Button("Search");
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+
+                        if (!menuType.getText().equals("Member Type")) {
+                            ArrayList<Member> members = data.getMembersByMemberType(menuType.getText());
+                            String display = menuType.getText() + " members:\n";
+                            for (Member member : members) {
+                                display += member.toString();
+                            }
+                            lblDisplay.setText(display);
+                        } else {
+                            lblDisplay.setText("ERROR: type not selected");
+                        }
+                    }
+                });
+                vboxSearch.setSpacing(10);
+                vboxSearch.getChildren().addAll(menuType,btnSearch);
             }
         });
     }
