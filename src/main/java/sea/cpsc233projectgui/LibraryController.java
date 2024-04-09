@@ -280,20 +280,6 @@ public class LibraryController {
     @FXML
     public void searchMember(ActionEvent event){
         vboxUserInput.getChildren().clear(); // clear existing content
-//        Label lblID = new Label("Search ID:");
-//        TextField txtSearchID = new TextField();
-//        Label lblName = new Label("Search Name:");
-//        TextField txtSearchName = new TextField();
-//
-//        RadioButton adult = new RadioButton("Adult");
-//        RadioButton child = new RadioButton("Child");
-//
-//        Button btnSearch = new Button("Search");
-//
-//        btnSearch.setOnAction(searchEvent -> {
-//            String searchTitle = txtSearchID.getText().trim();
-//            String searchAuthor = txtSearchName.getText().trim();
-//        });
 
         MenuButton menuSearch = new MenuButton("Search by...");
 
@@ -301,6 +287,8 @@ public class LibraryController {
         menuSearch.getItems().add(searchId);
         MenuItem searchName = new MenuItem("Search Name");
         menuSearch.getItems().add(searchName);
+        MenuItem searchType = new MenuItem("Search Type");
+        menuSearch.getItems().add(searchType);
 
 //        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
 //        vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
@@ -317,24 +305,56 @@ public class LibraryController {
                 Label lblId = new Label("Id");
                 TextField txtId = new TextField();
                 int memberId = Integer.parseInt(txtId.getText());
-
                 Button btnSearch = new Button("Search");
+
                 btnSearch.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         ArrayList<Member> members = data.getMembersById(memberId);
                         String display = "Members with that id:\n";
                         for (Member member:members){
-                            display+= member.toString();
+                            display += member.toString();
                         }
                         lblDisplay.setText(display);
                     }
                 });
+
                 vboxSearch.setSpacing(10);
-                vboxSearch.getChildren().addAll(lblId,txtId,btnSearch);
+                vboxSearch.getChildren().addAll(lblId, txtId, btnSearch);
             }
         });
     }
+
+    @FXML
+    void searchName(MenuItem searchName, VBox vboxSearch,MenuButton menuSearch){
+        //when search by name is selected, the following happens
+        searchName.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                vboxSearch.getChildren().clear();
+                menuSearch.setText(searchName.getText());
+                Label lblName = new Label("Name");
+                TextField txtName = new TextField();
+                Button btnSearch = new Button("Search");
+
+                btnSearch.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        ArrayList<Member> members = data.getMembersByName(txtName.getText());
+                        String display = "Members with that id:\n";
+                        for (Member member:members){
+                            display += member.toString();
+                        }
+                        lblDisplay.setText(display);
+                    }
+                });
+
+                vboxSearch.setSpacing(10);
+                vboxSearch.getChildren().addAll(lblName, txtName, btnSearch);
+            }
+        });
+    }
+
 
     /**
      * Allows user to select from the list of user IDs, then displays the selected user
