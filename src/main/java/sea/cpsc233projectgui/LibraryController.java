@@ -127,7 +127,7 @@ public class LibraryController {
      */
     @FXML
     void load (File memberFile, File bookFile){
-        if (memberFile!=null&&bookFile!=null){
+        if (memberFile!=null && bookFile!=null){
             Data newData = MemberRecords.load(memberFile,data);
             if (newData!=null){
                 setData(newData);
@@ -145,9 +145,9 @@ public class LibraryController {
                 a.show();
             }
         } else {
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("File Load Failed");
-            a.show();
+            //a.setAlertType(Alert.AlertType.ERROR);
+            //a.setContentText("File Load Failed");
+            //a.show();
         }
 
     }
