@@ -287,7 +287,16 @@ public class LibraryController {
 
     @FXML
     public void mostActiveChild(){
+        vboxUserInput.getChildren().clear();
 
+        String display = "Most Active Child\n--------------------\n";
+
+        if (data.getMostActiveChild() == null){
+            display += "No children found!";
+        } else {
+            display +=  data.getMostActiveChild() + "\n--------------------\nCongratulations! Happy Reading!";
+        }
+        lblDisplay.setText(display);
     }
 
     /**
