@@ -357,13 +357,24 @@ public class LibraryController {
         menuSearch.getItems().add(searchId);
         MenuItem searchName = new MenuItem("Search Name");
         menuSearch.getItems().add(searchName);
-        MenuItem searchType = new MenuItem("Search Member Type");
-        menuSearch.getItems().add(searchType);
+        MenuItem searchMemberType = new MenuItem("Search Member Type");
+        menuSearch.getItems().add(searchMemberType);
 
-//        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
-//        vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
+        VBox vboxSearch = new VBox(); // displays the search items depending on type of search
+
+        searchId(searchId,vboxSearch,menuSearch);
+        searchName(searchName,vboxSearch,menuSearch);
+        searchMemberType(searchMemberType,vboxSearch, menuSearch);
+
+        vboxUserInput.setSpacing(10); // Set spacing to 10 pixels (adjust as needed)
+        vboxUserInput.getChildren().addAll(menuSearch, vboxSearch);
     }
 
+    /**
+     * called on by searchMember when search by title is selected
+     * @param searchId is the MenuItem selected
+     * @param vboxSearch is the VBox being displayed to the user
+     */
     @FXML
     void searchId(MenuItem searchId, VBox vboxSearch,MenuButton menuSearch){
         //when search by id is selected, the following happens
@@ -374,12 +385,12 @@ public class LibraryController {
                 menuSearch.setText(searchId.getText());
                 Label lblId = new Label("Id");
                 TextField txtId = new TextField();
-                int memberId = Integer.parseInt(txtId.getText());
                 Button btnSearch = new Button("Search");
 
                 btnSearch.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        int memberId = Integer.parseInt(txtId.getText());
                         ArrayList<Member> members = data.getMembersById(memberId);
                         String display = "Members with that id:\n";
                         for (Member member:members){
@@ -395,6 +406,11 @@ public class LibraryController {
         });
     }
 
+    /**
+     * called on by searchMember when search by title is selected
+     * @param searchName is the MenuItem selected
+     * @param vboxSearch is the VBox being displayed to the user
+     */
     @FXML
     void searchName(MenuItem searchName, VBox vboxSearch,MenuButton menuSearch){
         //when search by name is selected, the following happens
@@ -411,7 +427,7 @@ public class LibraryController {
                     @Override
                     public void handle(ActionEvent event) {
                         ArrayList<Member> members = data.getMembersByName(txtName.getText());
-                        String display = "Members with that id:\n";
+                        String display = "Members with that name:\n";
                         for (Member member:members){
                             display += member.toString();
                         }
