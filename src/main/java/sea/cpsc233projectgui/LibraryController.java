@@ -159,7 +159,7 @@ public class LibraryController {
                     error = true;
                 }
                 if (error){
-                    System.out.println("ERROR");
+                    lblDisplay.setText("ERROR: could not add member");
                 }
             }
         });
@@ -206,7 +206,7 @@ public class LibraryController {
                 }
 
                 if (error){
-                    System.out.println("ERROR");
+                    lblDisplay.setText("ERROR: could not remove member");
                 }
             }
         });
@@ -310,7 +310,7 @@ public class LibraryController {
                     error = true;
                 }
                 if (error){
-                    System.out.println("ERROR");
+                    lblDisplay.setText("ERROR: invalid book information");
                 } else {
                     ArrayList<Books> titleBooks = data.getBooksByTitle(title);
                     for (Books book : titleBooks){
@@ -355,7 +355,7 @@ public class LibraryController {
                 String author = txtAuthor.getText();
                 boolean error = data.removeBook(title,author);
                 if (error){
-                    System.out.println("ERROR");
+                    lblDisplay.setText("ERROR: could not remove book");
                 }
             }
         });
