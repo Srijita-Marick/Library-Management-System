@@ -408,12 +408,15 @@ public class Data {
      * Goes through daysOverdue list and calculates the average
      * @return the average amount of days overdue that books are returned
      */
-    public int getAverageDaysOverdue(){
-        int total=0;
-        for (int days:daysOverDue){
-            total+=days;
+    public int getAverageDaysOverdue() {
+        int total = 0;
+        for (int days : daysOverDue) {
+            total += days;
         }
-        return (int)((total/daysOverDue.size())+0.5);
+        if (daysOverDue.isEmpty()) {
+            return 0; // Handle case where daysOverDue is empty to avoid division by zero
+        }
+        return Math.round((float) total / daysOverDue.size());
     }
 
     /**

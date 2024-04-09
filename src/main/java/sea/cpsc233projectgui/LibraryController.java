@@ -279,7 +279,10 @@ public class LibraryController {
 
     @FXML
     public void averageDaysOverdue(){
+        vboxUserInput.getChildren().clear();
 
+        String display = "Average Days Overdue:\n--------------------\n" + data.getAverageDaysOverdue();
+        lblDisplay.setText(display);
     }
 
     @FXML
