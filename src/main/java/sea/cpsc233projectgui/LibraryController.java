@@ -271,8 +271,13 @@ public class LibraryController {
         lblDisplay.setText(display);
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields for a user to search for a member
+     * When button pressed, it searches for the member based on the criteria, and displays it on the display panel
+     * @param event The ActionEvent triggering the method call
+     */
     @FXML
-    public void searchMember(){
+    public void searchMember(ActionEvent event){
         vboxUserInput.getChildren().clear(); // clear existing content
         Label lblID = new Label("Search ID:");
         TextField txtSearchID = new TextField();
@@ -352,6 +357,11 @@ public class LibraryController {
         });
     }
 
+    /**
+     * Goes through the number of days overdue for each book that is returned and displays
+     * the average time it takes for a member to return a book to the library
+     * If there is no data regarding checkout and returning of books, returns 0
+     */
     @FXML
     public void averageDaysOverdue(){
         vboxUserInput.getChildren().clear();
@@ -360,6 +370,11 @@ public class LibraryController {
         lblDisplay.setText(display);
     }
 
+    /**
+     * Goes through all the child members in the library and congratulates the one that
+     * has borrowed the most books at any given period of time
+     * If there is no data to be collected, displays "No children found"
+     */
     @FXML
     public void mostActiveChild(){
         vboxUserInput.getChildren().clear();
