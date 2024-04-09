@@ -238,6 +238,10 @@ public class LibraryController {
 
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields to add a book to library
+     * When button pressed, it adds the book and displays it on the display panel
+     */
     @FXML
     public void addBook(ActionEvent event){
 
@@ -312,12 +316,7 @@ public class LibraryController {
                 if (error){
                     lblDisplay.setText("ERROR: invalid book information");
                 } else {
-                    ArrayList<Books> titleBooks = data.getBooksByTitle(title);
-                    for (Books book : titleBooks){
-                        if (book.getAuthor().equals(author)){
-                            lblDisplay.setText("Added Book!"+book.toString());
-                        }
-                    }
+                    displayBook(title,author);
                 }
             }
         });
@@ -327,6 +326,11 @@ public class LibraryController {
 
     }
 
+    /**
+     * When a genre is selected, changes the menuButton to reflect the change
+     * @param menuGenre is the MenuButton that is being changed
+     * @param menuItem  is the item represented a genre that has been selected
+     */
     void setGenreAction(MenuButton menuGenre, MenuItem menuItem){
         menuItem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -336,7 +340,24 @@ public class LibraryController {
         });
     }
 
+    /**
+     * Displays a book's .toString in lblDisplay
+     * @param title of the book
+     * @param author of the book
+     */
+    void displayBook (String title, String author){
+        ArrayList<Books> titleBooks = data.getBooksByTitle(title);
+        for (Books book : titleBooks){
+            if (book.getAuthor().equals(author)){
+                lblDisplay.setText("Added Book!"+book.toString());
+            }
+        }
+    }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields to remove a book from library
+     * When button pressed, it removes the book and displays it on the display panel
+     */
     @FXML
     public void removeBook(){
         vboxUserInput.getChildren().clear();
@@ -347,7 +368,7 @@ public class LibraryController {
 
         Button btnRemoveBook = new Button("Remove Book");
 
-        // creates book when "Remove Book" is clicked
+        // removes book when "Remove Book" is clicked
         btnRemoveBook.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -356,12 +377,18 @@ public class LibraryController {
                 boolean error = data.removeBook(title,author);
                 if (error){
                     lblDisplay.setText("ERROR: could not remove book");
+                } else {
+                    displayBook(title,author);
                 }
             }
         });
         vboxUserInput.getChildren().addAll(lblTitle,txtTitle,lblAuthor,txtAuthor,btnRemoveBook);
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields for a user to check out a book
+     * When button pressed, it checks out the book and displays the member's updated information on the display panel
+     */
     @FXML
     public void checkoutBook(){
         vboxUserInput.getChildren().clear();
@@ -401,6 +428,10 @@ public class LibraryController {
 
     }
 
+    /**
+     * Edits the vboxUserInput to have the correct fields for a user to return a book
+     * When button pressed, it returns the book and displays the member's updated information on the display panel
+     */
     @FXML
     public void returnBook(){
         vboxUserInput.getChildren().clear();
@@ -411,8 +442,9 @@ public class LibraryController {
         Label lblAuthor = new Label("Book Author");
         TextField txtAuthor = new TextField();
         Button btnReturn = new Button("Return");
+        Label lblDaysOverdue = new Label("Days Overdue");
         TextField txtDaysOverdue = new TextField();
-        Button btnDaysOverdue = new Button("Days Overdue");
+
 
         btnReturn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -422,6 +454,7 @@ public class LibraryController {
                     String title = txtTitle.getText();
                     String author = txtAuthor.getText();
                     int days = Integer.parseInt(txtDaysOverdue.getText());
+
                     if (!data.checkExistMember(id)){
                         lblDisplay.setText("ERROR: that member does not exist");
                     } else if (!data.checkExistBook(title,author)){
@@ -442,14 +475,17 @@ public class LibraryController {
                 }
             }
         });
-        vboxUserInput.getChildren().addAll(lblID,txtID,lblTitle,txtTitle,lblAuthor,txtAuthor,btnReturn);
+        vboxUserInput.getChildren().addAll(lblID,txtID,lblTitle,txtTitle,lblAuthor,txtAuthor,lblDaysOverdue,txtDaysOverdue,btnReturn);
     }
 
+    /**
+     * Displays all books on lblDisplay
+     */
     @FXML
     public void viewBook(){
         vboxUserInput.getChildren().clear();
 
-        String display="All Books:";
+        String display="All Books:"; // text to be displayed
         ArrayList<Books> books = data.getAllBooks();
         for (Books book: books){
             display += book.toString();
@@ -480,6 +516,10 @@ public class LibraryController {
         vboxUserInput.getChildren().addAll(lblTitle, txtSearchTitle, lblAuthor, txtSearchAuthor, physical, audio, btnSearch);
     }
 
+    /**
+     * Goes through each genre and displays the most popular book in that genre
+     * If there are no books in that genre, it doesn't display any book there
+     */
     @FXML
     public void mostPopularBook(){
         vboxUserInput.getChildren().clear();
