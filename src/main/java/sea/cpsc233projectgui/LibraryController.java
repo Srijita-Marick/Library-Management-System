@@ -416,7 +416,10 @@ public class LibraryController {
         String display = "Most Popular Book in Each Genre\n--------------------\n";
 
         for (String genre:genres){ //creates genres and adds them to the genre menu
-            display += genre + data.mostPopularBookByGenre(genre).toString();
+            if (!data.getBooksByGenre(genre).isEmpty()){
+                display += genre + data.mostPopularBookByGenre(genre).toString() +"\n--------------------\n";
+            }
+
         }
         lblDisplay.setText(display);
     }
