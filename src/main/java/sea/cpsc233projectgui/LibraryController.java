@@ -146,7 +146,7 @@ public class LibraryController {
 
         String[] memType = new String[]{"ADULT","CHILD"};
 
-        for (String type:memType){ //creates genres and adds them to the genre menu
+        for (String type:memType){ //creates member types and adds them to the memType menu
             MenuItem menuItem = new MenuItem(type);
             menuMemberType.getItems().add(menuItem);
             setMemAction(menuMemberType,menuItem);
@@ -154,7 +154,7 @@ public class LibraryController {
 
         Button btnAddMem = new Button("Add Member");
 
-        // creates book when "Add Book" is clicked
+        // creates member when "Add Member" is clicked
         btnAddMem.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -252,7 +252,23 @@ public class LibraryController {
 
     @FXML
     public void searchMember(){
+        vboxUserInput.getChildren().clear(); // clear existing content
+        Label lblID = new Label("Search ID:");
+        TextField txtSearchID = new TextField();
+        Label lblName = new Label("Search Name:");
+        TextField txtSearchName = new TextField();
 
+        RadioButton adult = new RadioButton("Adult");
+        RadioButton child = new RadioButton("Child");
+
+        Button btnSearch = new Button("Search");
+
+        btnSearch.setOnAction(searchEvent -> {
+            String searchTitle = txtSearchID.getText().trim();
+            String searchAuthor = txtSearchName.getText().trim();
+        });
+
+        vboxUserInput.getChildren().addAll(lblID, txtSearchID, lblName, txtSearchName, adult, child, btnSearch);
     }
 
     @FXML
