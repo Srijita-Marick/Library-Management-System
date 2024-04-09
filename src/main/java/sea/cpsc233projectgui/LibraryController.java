@@ -83,12 +83,12 @@ public class LibraryController {
         // Show alert
         a.setAlertType(Alert.AlertType.INFORMATION);
         a.setContentText("Choose Member File");
-        a.show();
+        a.showAndWait();
         File memberFile = getFile(event);
         // Show alert
         a.setAlertType(Alert.AlertType.INFORMATION);
         a.setContentText("Choose Book File");
-        a.show();
+        a.showAndWait();
         File bookFile = getFile(event);
         load(memberFile,bookFile);
 
@@ -108,7 +108,7 @@ public class LibraryController {
             } else {
                 a.setAlertType(Alert.AlertType.ERROR);
                 a.setContentText("Invalid format for member file");
-                a.show();
+                a.showAndWait();
             }
             newData = BookRecords.load(bookFile,data);
             if (newData!=null){
@@ -116,12 +116,12 @@ public class LibraryController {
             } else {
                 a.setAlertType(Alert.AlertType.ERROR);
                 a.setContentText("Invalid format for book file");
-                a.show();
+                a.showAndWait();
             }
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("File Load Failed");
-            a.show();
+            a.showAndWait();
         }
 
     }
@@ -143,7 +143,7 @@ public class LibraryController {
         } else {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("File Load Failed");
-            a.show();
+            a.showAndWait();
             return null;
         }
     }
