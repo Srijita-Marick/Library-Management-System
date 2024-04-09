@@ -52,27 +52,53 @@ public class LibraryController {
      */
     @FXML
     protected void save(ActionEvent event) {
-        MenuItem menuItem = (MenuItem) event.getSource();
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save File");
-
-        Node node = menuItem.getParentPopup().getOwnerNode();
-        File file = fileChooser.showSaveDialog(node.getScene().getWindow());
-
-        if (file != null) {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-                bw.write("Saved!");
+        a.setAlertType(Alert.AlertType.INFORMATION);
+        a.setContentText("Choose Member File");
+        a.showAndWait();
+        File memberFile = getFile(event);
+        // Show alert
+        a.setAlertType(Alert.AlertType.INFORMATION);
+        a.setContentText("Choose Book File");
+        a.showAndWait();
+        File bookFile = getFile(event);
+        save(memberFile,bookFile);
+    }
+    /**
+     * loads the new files int Data... can be called on from command line arguments as well
+     * @param memberFile is file containing member info
+     * @param bookFile is file containing book info
+     */
+    @FXML
+    void save (File memberFile, File bookFile){
+        if (memberFile!=null&&bookFile!=null){
+            if (MemberRecords.save(memberFile,data)){
                 a.setAlertType(Alert.AlertType.INFORMATION);
-                a.setContentText("File saved successfully!");
-                a.show();
-            } catch (IOException e) {
+                a.setContentText("Member file saved!");
+                a.showAndWait();
+            } else {
                 a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Error saving file: " + e.getMessage());
+                a.setContentText("File Saving Failed");
                 a.show();
             }
+            if (BookRecords.save(bookFile,data)){
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Book file saved!");
+                a.showAndWait();
+            } else {
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("File Saving Failed");
+                a.show();
+            }
+
+
+        } else {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("File Saving Failed");
+            a.show();
         }
+
     }
+
 
     /**
      * Allows the user to load a file using a file chooser dialog
@@ -84,12 +110,12 @@ public class LibraryController {
         // Show alert
         a.setAlertType(Alert.AlertType.INFORMATION);
         a.setContentText("Choose Member File");
-        a.show();
+        a.showAndWait();
         File memberFile = getFile(event);
         // Show alert
         a.setAlertType(Alert.AlertType.INFORMATION);
         a.setContentText("Choose Book File");
-        a.show();
+        a.showAndWait();
         File bookFile = getFile(event);
         load(memberFile,bookFile);
     }
@@ -147,6 +173,8 @@ public class LibraryController {
             return null;
         }
     }
+
+
 
 
     /**
