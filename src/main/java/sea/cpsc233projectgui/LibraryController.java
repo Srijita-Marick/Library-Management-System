@@ -152,6 +152,11 @@ public class LibraryController {
 
     }
 
+    /**
+     * uses filechooser to get file from user
+     * @return the selected file
+     */
+
     @FXML
     File getFile(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
