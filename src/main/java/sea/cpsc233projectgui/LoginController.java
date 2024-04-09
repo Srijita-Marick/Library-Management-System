@@ -23,9 +23,9 @@ public class LoginController {
     @FXML
     private Label statusLabel;
 
-    private Login login;
+    protected Login login;
 
-    public LoginController() {
+    protected LoginController() {
         login = new Login();
     }
 

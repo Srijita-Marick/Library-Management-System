@@ -38,7 +38,7 @@ public class LibraryController {
     private Alert a = new Alert(Alert.AlertType.NONE);
 
     private Data data = new Data();
-    public void setData(Data data) {
+    private void setData(Data data) {
         this.data = data;
     }
 
@@ -870,9 +870,9 @@ public class LibraryController {
      */
     @FXML
     private void about(){
-        String aboutMessage = "This is a library management system\n" +
-                "Developers:\n Anna Littkemann, Emily Ng Kwong Sang, Srijita Marick\n" +
-                "Emails:\nlittkemann@ucalgary.ca, emily.ngkwongsang@ucalgary.ca," +
+        String aboutMessage = "Welcome to our library management system!\n" +
+                "Developers:\nAnna Littkemann, Emily Ng Kwong Sang, Srijita Marick\n" +
+                "Emails:\nanna.littkemann@ucalgary.ca, emily.ngkwongsang@ucalgary.ca," +
                 "  srijita.marick@ucalgary.ca";
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
