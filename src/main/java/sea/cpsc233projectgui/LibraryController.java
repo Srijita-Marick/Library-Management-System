@@ -315,7 +315,7 @@ public class LibraryController {
                     ArrayList<Books> titleBooks = data.getBooksByTitle(title);
                     for (Books book : titleBooks){
                         if (book.getAuthor().equals(author)){
-                            lblDisplay.setText(book.toString());
+                            lblDisplay.setText("Added Book!"+book.toString());
                         }
                     }
                 }
@@ -364,6 +364,42 @@ public class LibraryController {
 
     @FXML
     public void checkoutBook(){
+        vboxUserInput.getChildren().clear();
+        Label lblID = new Label("Member ID");
+        TextField txtID = new TextField();
+        Label lblTitle = new Label("Book Title");
+        TextField txtTitle = new TextField();
+        Label lblAuthor = new Label("Book Author");
+        TextField txtAuthor = new TextField();
+        Button btnCheckout = new Button("Checkout");
+
+        btnCheckout.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                try {
+                    int id = Integer.parseInt(txtID.getText());
+                    String title = txtTitle.getText();
+                    String author = txtAuthor.getText();
+                    if (!data.checkExistMember(id)){
+                        lblDisplay.setText("ERROR: that member does not exist");
+                    } else if (!data.checkExistBook(title,author)){
+                        lblDisplay.setText("ERROR: the library does not own that book");
+                    } else if (!data.checkBookAvailable(title,author)){
+                        lblDisplay.setText("ERROR: that book is currently unavailable");
+                    } else {
+                        data.checkoutBook(id,title,author);
+                        lblDisplay.setText(title+" by "+author +"was checked out by...\n"+ data.getMembersById(id).toString());
+                    }
+
+                    data.checkoutBook(id,txtTitle.getText(),txtAuthor.getText());
+                } catch (NumberFormatException e){
+                    lblDisplay.setText("ERROR: invalid member ID");
+                }
+            }
+        });
+
+
+
 
     }
 
