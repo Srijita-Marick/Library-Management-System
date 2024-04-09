@@ -47,7 +47,7 @@ public class BookRecords {
         try (Scanner scanner = new Scanner(file)) {
             String line = scanner.nextLine();
             if (!line.equals("Books")) {
-                System.err.println("File did not have correct header, so loading failed.");
+                //System.err.println("File did not have correct header, so loading failed.");
                 return null;
             }
 
@@ -74,7 +74,7 @@ public class BookRecords {
             }
             scanner.close();
         } catch (IOException e) {
-            System.err.println("Incorrect file format. Loading failed.");
+            //System.err.println("Incorrect file format. Loading failed.");
             return null;
         }
         return data;

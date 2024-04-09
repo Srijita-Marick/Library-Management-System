@@ -56,7 +56,7 @@ public class MemberRecords {
         try (Scanner scanner = new Scanner(file)) {
             String line = scanner.nextLine();
             if (!line.equals("Members")) {
-                System.err.println("File did not have correct header, so loading failed.");
+                //System.err.println("File did not have correct header, so loading failed.");
                 return null;
             }
 
@@ -90,7 +90,7 @@ public class MemberRecords {
             }
             scanner.close();
         } catch (IOException e) {
-            System.err.println("Incorrect file format. Loading failed.");
+            //System.err.println("Incorrect file format. Loading failed.");
             return null;
         }
         return data;
