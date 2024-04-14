@@ -18,7 +18,7 @@ public class LibraryApplication extends Application {
         stage.setTitle("Welcome to Library");
         stage.setScene(scene);
         stage.show();
-        //merging error fixing
+        //merging error fixing debug
     }
 
     private static File bookFile = null;
