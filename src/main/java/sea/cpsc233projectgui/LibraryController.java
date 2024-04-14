@@ -145,9 +145,9 @@ public class LibraryController {
                 a.show();
             }
         } else {
-            //a.setAlertType(Alert.AlertType.ERROR);
-            //a.setContentText("File Load Failed");
-            //a.show();
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("File Load Failed");
+            a.show();
         }
 
     }
