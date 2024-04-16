@@ -9,6 +9,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class LibraryApplication extends Application {
+
+    /**
+     * Runs on startup
+     * @param stage is the stage (visual component) of the program that will be edited as actions are taken
+     * @throws IOException if startup fails
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LibraryApplication.class.getResource("library.fxml"));
@@ -24,6 +30,10 @@ public class LibraryApplication extends Application {
 
     private static File memberFile = null;
 
+    /**
+     * launches the program and handles command line arguments
+     * @param args are the command line arguments from the terminal
+     */
     public static void main(String[] args) {
         if(args.length >2){
             System.err.println("Expected two command line argument for filename to load from");
