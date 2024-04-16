@@ -29,6 +29,10 @@ public class LoginController {
         login = new Login();
     }
 
+    /**
+     * Allows the user to login to the main application
+     * @param event The ActionEvent that triggers the login
+     */
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
         String username = usernameField.getText();
@@ -58,6 +62,12 @@ public class LoginController {
         }
     }
 
+    /**
+     * Allows the login button to check if the login id and password is valid
+     * @param username the set username to login to the application
+     * @param password the set password to login to the application
+     * @return True if login id and password are valid, False otherwise
+     */
     private boolean isValidLogin(String username, String password) {
         // Return true if the login is successful, false otherwise
         return username.equals("admin") && password.equals("sea");

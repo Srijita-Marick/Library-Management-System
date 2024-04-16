@@ -308,17 +308,21 @@ public class LibraryController {
         btnRemoveMember.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                boolean error = false;
+                boolean success = false;
                 try {
                     int id = Integer.parseInt(txtID.getText());
                     String name = txtName.getText();
-                    error = data.removeMember(id,name);
+                    success = data.removeMember(id,name);
+                    if (success){
+                        lblDisplay.setText("Member Removed Successfully!");
+                    }
+
                 } catch (NumberFormatException e){
-                    error = true;
+                    success = false;
                 }
 
-                if (error){
-                    lblDisplay.setText("ERROR: could not remove member");
+                if (!success){
+                    lblDisplay.setText("ERROR: Could not remove member");
                 }
             }
         });
@@ -390,13 +394,26 @@ public class LibraryController {
                 btnSearch.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        int memberId = Integer.parseInt(txtId.getText());
-                        ArrayList<Member> members = data.getMembersById(memberId);
-                        String display = "Members with that id:\n";
-                        for (Member member:members){
-                            display += member.toString();
+                        try {
+                            boolean error = false;
+                            int memberId = Integer.parseInt(txtId.getText());
+                            ArrayList<Member> members = data.getMembersById(memberId);
+                            error = data.getMembersById(memberId).isEmpty();
+                            if (error){
+                                lblDisplay.setText("ERROR: Could not find member");
+                            } else {
+                                String display = "Members with that id:\n";
+                                for (Member member:members){
+                                    display += member.toString();
+                                }
+                                lblDisplay.setText(display);
+                            }
+                        } catch (NumberFormatException e){
+                            lblDisplay.setText("ERROR: Number Format Exception");
                         }
-                        lblDisplay.setText(display);
+
+
+
                     }
                 });
 
@@ -471,7 +488,7 @@ public class LibraryController {
                             }
                             lblDisplay.setText(display);
                         } else {
-                            lblDisplay.setText("ERROR: type not selected");
+                            lblDisplay.setText("ERROR: Type not selected");
                         }
                     }
                 });
@@ -509,10 +526,10 @@ public class LibraryController {
                         Member member = data.getMembersById(Integer.parseInt(menuIDs.getText())).getFirst();
                         lblDisplay.setText("Payment Successful!\n"+member.toString());
                     } else {
-                        lblDisplay.setText("ERROR: invalid payment");
+                        lblDisplay.setText("ERROR: Invalid payment");
                     }
                 } catch (NumberFormatException e){
-                    lblDisplay.setText("ERROR: invalid inputs");
+                    lblDisplay.setText("ERROR: Invalid inputs");
                 }
 
             }
@@ -710,11 +727,11 @@ public class LibraryController {
             public void handle(ActionEvent event) {
                 String title = txtTitle.getText();
                 String author = txtAuthor.getText();
-                boolean error = data.removeBook(title,author);
+                boolean error = !data.removeBook(title,author);
                 if (error){
                     lblDisplay.setText("ERROR: Could Not Remove Book");
                 } else {
-                    displayBook(title,author);
+                    lblDisplay.setText("Book Removed Successfully");
                 }
             }
         });
