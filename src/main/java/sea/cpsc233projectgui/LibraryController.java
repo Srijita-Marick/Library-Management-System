@@ -144,11 +144,11 @@ public class LibraryController {
                 a.setContentText("Invalid format for book file");
                 a.show();
             }
-        } else {
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("File Load Failed");
-            a.show();
-        }
+        } //else {
+//            a.setAlertType(Alert.AlertType.ERROR);
+//            a.setContentText("File Load Failed");
+//            a.show();
+//        }
 
     }
 
